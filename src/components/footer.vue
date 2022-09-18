@@ -1,12 +1,12 @@
 <template>
   <footer class="footer">
-    <p>©2022 Chamberlain Coffee, LLC. All Rights Reserved.</p>
+    <p>©2022 Caffeine Factor Coffee, LLC. All Rights Reserved.</p>
     <ul>
         <li><a href="">Privacy Policy</a></li>
         <li><a href="">Terms & Conditions</a></li>
         
-        <li><img class="footer__social" src="https://cdn-icons-png.flaticon.com/512/87/87390.png" alt=""></li>
-        <li><img class="footer__social" src="https://cdn-icons-png.flaticon.com/512/20/20673.png" alt=""></li>
+        <li><img class="footer__social" src="https://img.favpng.com/8/15/12/belfast-youtube-logo-industry-png-favpng-FjjFZsdXvMVvi3NzvFBGebeF4.jpg" alt=""></li>
+        <li><img class="footer__social" src="https://cdn-icons-png.flaticon.com/512/49/49351.png" alt=""></li>
     </ul>
   </footer>
 </template>
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss">
-$fontColor: #391B00;
+
 ul {
     list-style: none;
     display: flex;
@@ -27,16 +27,16 @@ li {
     margin-left: 30px;
 }
 a {
-    color: $fontColor;
+    color: black;
 }
 .footer {
     display: flex;
     width: 100%;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'RalewayLight';
     font-size: 1em;
     font-weight: 300;
     margin: 30px 45px;
-    color: $fontColor;
+    
     &__social {
         height: 30px;
     }

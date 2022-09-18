@@ -1,9 +1,10 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import Footer from './components/footer.vue'
 
 export default {
   components: {
-    RouterLink, RouterView
+    RouterLink, RouterView, Footer
   }
 }
 </script>
@@ -18,8 +19,8 @@ export default {
       <div class="header__bar">
       
       <nav class="header__pages">
-          <RouterLink to="/" class="header__pages__item">Home</RouterLink>
-          <RouterLink to="/" class="header__pages__item" >Shop All</RouterLink>
+          <RouterLink to="/Home" class="header__pages__item">Home</RouterLink>
+          <RouterLink to="/shopAll" class="header__pages__item" >Shop All</RouterLink>
           <RouterLink to="/about" class="header__pages__item" >Coffee</RouterLink>
           <RouterLink to="/accesories" class="header__pages__item" >Apparel</RouterLink>
           
@@ -33,7 +34,6 @@ export default {
   </header>
 
   <RouterView />
-
 
 </template>
 

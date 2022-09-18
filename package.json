@@ -12,7 +12,9 @@
     "vue": "^3.2.37",
     "vue-carousel": "^0.18.0",
     "vue-router": "^4.1.3",
-    "vue3-carousel": "^0.1.46"
+    "vue-star-rating": "^2.1.0",
+    "vue3-carousel": "^0.1.46",
+    "vue3-star-ratings": "^1.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",
