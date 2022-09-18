@@ -10,7 +10,6 @@
         </slide>
 </Carousel>
 
-
 </template>
   
 <script>
@@ -24,17 +23,17 @@ export default {
         return {
           slides: [
             {
-                banner: '/banner1.png',
+                banner: '/promo1.png',
                 text: 'The ultimate coffee crowd pleaser.',
                 go: 'Get Info'
             },
             {
-                banner: '/banner2.png',
+                banner: '/promo2.png',
                 text: 'Woke and wise, this is the essential midnight oil rose.',
                 go: 'Get Info'
             },
             {
-                banner: '/banner3.png',
+                banner: '/promo3.png',
                 text: 'This one is for the early risers.',
                 go: 'Get Info'
             },

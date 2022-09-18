@@ -20,7 +20,7 @@ export default {
       
       <nav class="header__pages">
           <RouterLink to="/Home" class="header__pages__item">Home</RouterLink>
-          <RouterLink to="/shopAll" class="header__pages__item" >Shop All</RouterLink>
+          <RouterLink to="/shopAll" class="header__pages__item" >ShopAll</RouterLink>
           <RouterLink to="/about" class="header__pages__item" >Coffee</RouterLink>
           <RouterLink to="/accesories" class="header__pages__item" >Apparel</RouterLink>
           

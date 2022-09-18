@@ -13,14 +13,14 @@ export const useProductsStore = defineStore("products", {
     actions: {
         newProduct(product) {
             this.localStorageProducts.push(product);
-           
             this.products.push(product);
-            localStorageProducts.setItem('products', JSON.stringify(this.localStorage));
+            localStorage.setItem('products', JSON.stringify(this.localStorageProducts));
         },
 
         loadProducts() {
             this.localStorageProducts = JSON.parse(localStorage.getItem('products'));
             this.products = this.products.concat([...this.localStorageProducts]);
-        }
+        },
+ 
     }
 });

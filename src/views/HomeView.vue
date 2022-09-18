@@ -1,6 +1,7 @@
 <template>
    
         <Carousel/>
+        
         <Faves/>
         <div class="quote">
             <h4 class="quote__title">You are what you drink</h4>
@@ -8,7 +9,6 @@
                 you enjoy from us has been sourced, made and delivered to 
                 you in the most sustainable way possible.</h4>
         </div>
-
 
         <Footers/>
 

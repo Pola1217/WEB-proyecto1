@@ -98,7 +98,7 @@ export default {
   methods: {
     createNewProduct() {
       const newProduct = {
-        title: this.title,
+        name: this.name,
         category: this.category,
         description: this.description,
         price: this.price,
@@ -106,8 +106,13 @@ export default {
         image: this.imgURL
       };
 
-      this.store.newProduct(newProduct);
+      this.productsStore.newProduct(newProduct);
       
+      this.name = '';
+      this.category = '';
+      this.description = '';
+      this.price = '';
+      this.rating = '';
 
     },
 
@@ -157,4 +162,5 @@ export default {
     border-radius: 5px;
   }
 }
+
 </style>
