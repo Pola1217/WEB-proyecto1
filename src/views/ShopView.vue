@@ -7,10 +7,10 @@
     <RouterLink
       v-for="product in allProducts"
       :key="product.name"
-      :to="`/details/${productsStore.name}`"
+      :to="`/details/${productsStore.image}`"
     >
     <div class="shop__item__indi">
-      <img src="{{product.image}}" alt="preview">
+      <img :src=product.image alt="preview">
       <h4 class="shop__item__indi__name">{{ product.name }}</h4>
     </div>
     

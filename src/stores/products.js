@@ -21,6 +21,10 @@ export const useProductsStore = defineStore("products", {
             this.localStorageProducts = JSON.parse(localStorage.getItem('products'));
             this.products = this.products.concat([...this.localStorageProducts]);
         },
- 
+        
+        getProductById(id) {
+            const filteredProducts = this.products.filter((product) => id.toLowerCase() === product.name.toLowerCase());
+            return filteredProducts ? {...filteredProducts[0] } : null
+        },
     }
 });
