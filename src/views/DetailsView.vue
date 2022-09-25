@@ -1,13 +1,21 @@
 <template>
     <div class="product">
 
-      <img class="product__image" :src="currentProduct.image" alt="preview">
+      <img :src=currentProduct.image alt="preview" class="product__pic">
 
       <div class="product__info">
-        <p class="algo">Id del producto: {{ $route.params.productId }}</p>
-        <p>Nombre Producto: {{ currentProduct.name }}</p>
-        <p>color del producto: {{ currentProduct.description }}</p>
-        <p>precio del producto: {{ currentProduct.price }}</p>
+        <p class="algo"> {{$route.params.productId}}</p>
+        <p> {{ currentProduct.description }}</p>
+        <p> {{ currentProduct.price }}</p>    
+        <star-rating
+        v-bind:increment="0.5"
+        v-bind:max-rating="5"
+        v-model:rating="rating"
+        inactive-color="#000"
+        active-color="#f00"
+        :rounded-corners="true"
+        :border-width="2"
+      >{{ currentProduct.rating }}</star-rating>    
       </div>
       
     </div>
@@ -22,18 +30,21 @@
     data() {
       return { currentProduct: {} };
     },
+
     computed: {
       ...mapStores(useProductsStore),
+      
     },
+
     mounted() {
-      this.currentProduct = this.productsStore.getProductById(
+    this.currentProduct = this.productsStore.getProductsById(
         this.$route.params.productId
       );
     },
   };
   </script>
 
-  <style>
+  <style lang="scss">
 
     .product{
         padding-top: 10%;
@@ -41,12 +52,11 @@
         display: flex;
         align-items: center;
            
-    }
-
-    .product__image{
-        width:100%;
-        height: 700px;
+        &__pic{
+          width:100%;
+        height: 500px;
         object-fit: contain;
+        }
     }
 
     .product__info{

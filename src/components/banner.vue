@@ -5,7 +5,10 @@
             <img :src="slide.banner" class="banner">
             <div class="info">
                 <h3 class="info__text">{{slide.text}}</h3>
-                <button class="info__button">{{slide.go}}</button>
+                <router-link to="/shopAll">
+                    <button class="info__button">{{slide.go}}</button>
+                </router-link>
+                
             </div>
         </slide>
 </Carousel>
@@ -25,17 +28,17 @@ export default {
             {
                 banner: '/promo1.png',
                 text: 'The ultimate coffee crowd pleaser.',
-                go: 'Get Info'
+                go: 'Go to shop'
             },
             {
                 banner: '/promo2.png',
                 text: 'Woke and wise, this is the essential midnight oil rose.',
-                go: 'Get Info'
+                go: 'Go to shop'
             },
             {
                 banner: '/promo3.png',
-                text: 'This one is for the early risers.',
-                go: 'Get Info'
+                text: 'This one is for the early risers. Dont miss the opportunity',
+                go: 'Go to shop'
             },
           ],
         }
@@ -77,7 +80,7 @@ export default {
     &__button{
             width: 20%;
             height: 50px;
-            margin-left: 16%;
+            margin-right: 45%;
             background: none;
             border: 2px solid #ffffff;
             border-radius: 5px;
@@ -89,6 +92,27 @@ export default {
             font-size: 1em;
     }
     
+}
+
+@media (max-width:600px) {
+
+.banner{
+    position:relative;
+    margin-top: 18%;
+    width: 100%;
+}
+.info{
+    &__text{
+        font-size: 1em;
+        margin: 10px 0;
+}
+
+&__button{
+    height: 30px;
+    font-size: 0.5em;
+}
+}
+   
 }
 
 </style>>

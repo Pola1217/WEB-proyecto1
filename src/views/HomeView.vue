@@ -11,8 +11,6 @@
         </div>
 
         <Footers/>
-
-
 </template>
 
 <script>
@@ -65,6 +63,22 @@ export default {
         padding-top: 1%;
         display: inline-flex;
     }
+}
+
+@media (max-width:600px) {
+    .quote{
+        text-align: center;
+        width: 100%;
+        
+    
+    &__title{
+        font-size: 1em;
+    }
+    &__subtitle{
+        font-size: 0.6em;
+        width: 80%;
+    }
+}
 }
 
 </style>

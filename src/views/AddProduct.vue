@@ -41,16 +41,17 @@
         v-bind:max-rating="5"
         v-model:rating="rating"
         inactive-color="#000"
-        active-color="#f00"
+        active-color="#F2BA42"
         :rounded-corners="true"
         :border-width="2"
+        class="form__input__star"
       ></star-rating>
 
       <input 
       placeholder='img' 
       type='file' 
       name='img' 
-      id='img'
+      id='newProduct'
       class='form__input'
       multiple
       @change="readImage"/>
@@ -160,6 +161,10 @@ export default {
     margin-bottom: 17px;
     padding: 10px;
     border-radius: 5px;
+
+    &__star{
+align-items: flex-end;
+    }
   }
 }
 

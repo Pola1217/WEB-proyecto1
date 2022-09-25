@@ -22,7 +22,7 @@ export const useProductsStore = defineStore("products", {
             this.products = this.products.concat([...this.localStorageProducts]);
         },
         
-        getProductById(id) {
+        getProductsById(id) {
             const filteredProducts = this.products.filter((product) => id.toLowerCase() === product.name.toLowerCase());
             return filteredProducts ? {...filteredProducts[0] } : null
         },

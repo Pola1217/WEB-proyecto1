@@ -6,7 +6,7 @@
       <div class="faves">
         <img :src="slide.pic" class="faves__pic">
         <h3 class="faves__text">{{slide.name}}</h3>
-        <h3 class="faves__button">{{slide.price}}</h3>
+        <h3 class="faves__price">{{slide.price}}</h3>
      
       </div>
     </Slide>
@@ -72,16 +72,25 @@ export default {
     }
 
     .faves{
-      padding: 5%;
+      padding: 9%;
+
+      &__pic{
+        width: 100%;
+      }
 
       &__text{
-        font-family: 'RalewayLight'; 
-        padding: 1.5%;
+        font-family: 'RalewayLight';
+        font-size: 0.9em; 
 
+      }
+
+      &__price{
+        font-family: 'Raleway';
+        font-size: 0.9em; 
       }
     }
 
-  .carousel__slide > .faves {
+.carousel__slide > .faves {
   transform: scale(1);
   opacity: 0.5;
   transition: 0.5s;
@@ -98,6 +107,27 @@ export default {
 }
 .carousel__slide--active > .faves {
   transform: scale(1.1);
+}
+
+@media (max-width:600px) {
+
+  .title{
+      font-size: 1em;
+    }
+
+    .faves{
+   
+      &__text{
+        font-family: 'RalewayLight'; 
+        padding: 1.5%;
+        font-size: 0.6em; 
+      }
+
+      &__price{
+        font-size: 0.7em; 
+      }
+    }
+
 }
 
 </style>
