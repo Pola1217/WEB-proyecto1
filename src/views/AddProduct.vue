@@ -44,6 +44,7 @@
         active-color="#F2BA42"
         :rounded-corners="true"
         :border-width="2"
+        :star-size="40"
         class="form__input__star"
       ></star-rating>
 
@@ -163,7 +164,7 @@ export default {
     border-radius: 5px;
 
     &__star{
-align-items: flex-end;
+      align-items: flex-end;
     }
   }
 }

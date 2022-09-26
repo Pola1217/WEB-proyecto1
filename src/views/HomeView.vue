@@ -1,7 +1,6 @@
 <template>
    
         <Carousel/>
-        
         <Faves/>
         <div class="quote">
             <h4 class="quote__title">You are what you drink</h4>

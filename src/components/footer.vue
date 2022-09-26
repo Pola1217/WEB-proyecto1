@@ -41,7 +41,7 @@ a {
     align-items: center;
     font-family: 'RalewayLight';
     font-size: 1em;
-    margin: 30px 45px;
+    margin: 80px 0 20PX 45px;
     
     &__social {
         display: flex;

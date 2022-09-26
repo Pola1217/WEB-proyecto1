@@ -98,7 +98,7 @@ export default {
 
 .banner{
     position:relative;
-    margin-top: 18%;
+    margin-top: 16%;
     width: 100%;
 }
 .info{

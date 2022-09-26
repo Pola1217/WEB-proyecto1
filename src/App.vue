@@ -78,19 +78,19 @@ export default {
     
     &__icon{
     display: none;
-    margin: 0%;
   }
+}
 
   &__pages {
     width: 100%;
-    
+    margin-left: 5%;
     
     &__item {
-      margin: 20%;
+      margin: 15px;
     }
   }
 
-  }
+  
 
   &__logo {
     object-fit: contain;
