@@ -276,6 +276,11 @@ export default {
     &__indi{
       margin-inline: 10px;
 
+      &__name{
+      width: 50%;
+      font-size: 1em;
+     }
+
       &__pic{
       width: 100px;
       height: 115px;

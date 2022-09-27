@@ -8,6 +8,9 @@
                 you enjoy from us has been sourced, made and delivered to 
                 you in the most sustainable way possible.</h4>
         </div>
+        
+        <img src="/sub.png" alt="preview" class="subscribe">
+        <img src="/subMedia.png" alt="preview" class="subscribe__media">
 
         <Footers/>
 </template>
@@ -17,12 +20,14 @@
 import Carousel from '../components/banner.vue'
 import Faves from '../components/faves.vue'
 import Footers from '../components/footer.vue'
+import Subscribe from '../components/footer.vue'
 
 export default {
     components: {
     Carousel,
     Faves,
-    Footers
+    Footers,
+    Subscribe
 },
 }
 </script>
@@ -64,6 +69,14 @@ export default {
     }
 }
 
+.subscribe{
+    padding: 3% 0% 0% 5%;
+    margin-left: 6%;
+    &__media{
+        display: none;
+    }
+}
+
 @media (max-width:600px) {
     .quote{
         text-align: center;
@@ -78,6 +91,17 @@ export default {
         width: 80%;
     }
 }
+}
+
+.subscribe{
+    display: none;
+    &__media{
+        display: flex;
+        margin-top: 5%;
+        width: 100%;
+        height: 250px;
+       
+    }
 }
 
 </style>

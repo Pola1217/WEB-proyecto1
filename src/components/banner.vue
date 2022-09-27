@@ -54,7 +54,8 @@ export default {
 <style lang="scss" scoped>
 
 .banner{
-    position:relative;
+
+    position:inherit;
     margin-top: 4%;
     width: 100%;
 }

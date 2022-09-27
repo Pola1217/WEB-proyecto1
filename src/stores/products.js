@@ -39,7 +39,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Take your beverage break to the next level with our NEW Chamberlain Coffee Electric Milk Frother. Get creative with some fancy latte art, or add some frothed milk onto your beverage and call it a day.",
                     'price': '19',
                     'rating': 4,
-                    'image': '/best1.png',
+                    'image': '/milk.png',
                 },
                 {
                     'name': "Social Dog Blend - Coffee Bag",
@@ -47,7 +47,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Time for a treat! The kind of brew thats made for sharing. Full bodied, complex & smooth with notes of milk chocolate, roasted peanuts, brown sugar, & a graham cracker finish.",
                     'price': '16',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/best2.png',
                 },
                 {
                     'name': "Fluffy Lamb Vanilla Blend Coffee",
@@ -63,7 +63,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "This ones for the early risers. For the get-up and goers. For the ones who get shit done.",
                     'price': '20',
                     'rating': 3,
-                    'image': '/best1.png',
+                    'image': '/bird.png',
                 },
                 {
                     'name': "Variety Box Single Serve",
@@ -71,7 +71,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Try them all and find your fave. Get two single-serve Chamberlain Single.",
                     'price': '20',
                     'rating': 3,
-                    'image': '/best1.png',
+                    'image': '/best5.png',
                 },
                 {
                     'name': "Wildcat Instant Sticks (10pc)",
@@ -79,7 +79,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "These instant coffee sticks are perfect for on-the-go when you’re short on energy and time. Just add water for the best coffee for the road!",
                     'price': '20',
                     'rating': 4,
-                    'image': '/best1.png',
+                    'image': '/wildcat.png',
                 },
                 {
                     'name': "Social Dog Single Serve",
@@ -87,7 +87,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Time for a treat! The kind of brew that’s made for sharing.",
                     'price': '16',
                     'rating': 3,
-                    'image': '/best1.png',
+                    'image': '/dogSingle.png',
                 },
                 {
                     'name': "Careless Cat Single Serve",
@@ -95,7 +95,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Time for a treat! The kind of brew that’s made for sharing.",
                     'price': '16',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/catSingle.png',
                 },
                 {
                     'name': "Early Bird Single Serve",
@@ -103,7 +103,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "This one’s for the early risers. For the get-up and goers. For the ones who get shit done.",
                     'price': '16',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/birdSingle.png',
                 },
                 {
                     'name': "Matcha Green Tea Powder",
@@ -111,7 +111,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Our Organic Matcha Green Tea Powder is vegan, gluten-free, full of antioxidants, and just simply delicious.",
                     'price': '20',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/match.png',
                     
                 },
                 {
@@ -120,7 +120,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "You heard it here first: vanilla is the secret to less stress. Mixed with our best selling Matcha, you’ve got a perfect beverage. ",
                     'price': '20',
                     'rating': 4,
-                    'image': '/best1.png',
+                    'image': '/vanilla.png',
                 },
                 {
                     'name': "Mango Flavored Matcha Tea Powder",
@@ -128,7 +128,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Like a trip to the tropics, Mango Matcha is all natural, rich in benefits, and just plain delicious. ",
                     'price': '20',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/mango.png',
                 },
                 {
                     'name': "Matcha Variety Pack",
@@ -136,7 +136,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Try them ALL! Your matcha routine just leveled up with all three of our best selling Matcha green tea powders",
                     'price': '40',
                     'rating': 2,
-                    'image': '/best1.png',
+                    'image': '/best4.png',
                 },
                 {
                     'name': "Super Matcha Bundle",
@@ -144,7 +144,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "We have your matcha routine sorted.",
                     'price': '40',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/kitMatch.png',
                 },
                 {
                     'name': "Fancy Mouse Espresso Blend - Coffee Bag",
@@ -152,7 +152,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Chamberlain Coffees espresso blend. Available in both classic ground and whole bean.",
                     'price': '15',
                     'rating': 4,
-                    'image': '/best1.png',
+                    'image': '/mouse.png',
                 },
                 {
                     'name': "Witty Fox Hazelnut Blend Coffee",
@@ -160,7 +160,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Life’s short. Why not sip great (flavored) coffee? Witty Fox is always down for mischief.",
                     'price': '20',
                     'rating': 2,
-                    'image': '/best1.png',
+                    'image': '/fox.png',
                 },
                 {
                     'name': "Sleepy Sloth Decaf Blend - Coffee Bag",
@@ -168,7 +168,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Love coffee but also love sleeping? The Sleepy Sloth decaf blend is perfect for those that want coffee but don’t need that extra energy.",
                     'price': '16',
                     'rating': 3,
-                    'image': '/best1.png',
+                    'image': '/decaff.png',
                 },
                 {
                     'name': "Cold Brew Elephant - XL Cold Brew Bags",
@@ -176,7 +176,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "This is for the BIG TIME cold brew lovers. Start your morning the right way in just three steps",
                     'price': '35',
                     'rating': 1,
-                    'image': '/best1.png',
+                    'image': '/xl.png',
                 },
                 {
                     'name': "Double Walled Mug",
@@ -184,7 +184,7 @@ export const useProductsStore = defineStore("products", {
                     'description': "Introducing the Double Walled Mug, an oh-so-cute piece of glassware to elevate your drink-of-choice, hot or cold.",
                     'price': '25',
                     'rating': 5,
-                    'image': '/best1.png',
+                    'image': '/cup.png',
                 },  
     
               ];
