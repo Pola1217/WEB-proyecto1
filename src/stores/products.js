@@ -281,6 +281,41 @@ export const useProductsStore = defineStore("products", {
                 }
             };
 
+            if (filterNumb == 'rating') {
+               
+                console.log(index);
+
+                switch (index) {
+  
+                    case "0":
+                        this.loadProducts();
+                        this.products = this.products.filter((product) => product.rating == "1");
+                        
+                        break;
+                    case "1":
+                        this.loadProducts();
+                        this.products = this.products.filter((product) => product.rating == "2");
+                        
+                        break;
+                    case "2":
+                        this.loadProducts();
+                        this.products = this.products.filter((product) => product.rating == "3");
+                        
+                        break;
+                    case "3":
+                        this.loadProducts();
+                        this.products = this.products.filter((product) => product.rating == "4");
+                        
+                        break;
+                    case "4":
+                        this.loadProducts();
+                        this.products = this.products.filter((product) => product.rating == "5");
+                        
+                        break;
+                    
+                }
+            };
+
             
         },
     }
