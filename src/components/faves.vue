@@ -42,7 +42,7 @@ export default {
             },
             {
                 pic: '/best4.png',
-                name: 'Match Bundle',
+                name: 'Matcha Bundle',
                 price: '29.00',
             },
             {

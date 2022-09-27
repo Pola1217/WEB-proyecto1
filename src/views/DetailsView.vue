@@ -42,7 +42,6 @@
 
     computed: {
       ...mapStores(useProductsStore),
-      
     },
 
     mounted() {

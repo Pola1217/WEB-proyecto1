@@ -5,29 +5,50 @@
     <h1 class="shop__title">shop all</h1>
 
     <section class="shop__filters">
-
-      <label for="search">Search</label>
-      <input type="text" v-model="buscar" id="searchBar" placeholder="Search By Name"/>
-   
-   <label for="category">Categories</label>
-       <select name="category" id="category">
-           <option value="">All</option>
-           <option value="kits">Coffee</option>
-           <option value="refils">Tea</option>
-           <option value="cleanse">Kits</option>
-           <option value="care">Accesories</option>
+      
+    <label for="category">Categories</label>
+       <select name="category" id="category" @change="filterBy($event, 'category')">
+       
+           <option value=" ">All</option>
+           <option value="0">Coffee</option>
+           <option value="1">Tea</option>
+           <option value="2">Accesories</option>
+           <option value="3">Kits</option>
+           <option value="4">Single Serve</option>
        </select>
+
+    <label for="price">Prices</label>
+       <select name="price" id="price" @change="filterBy($event, 'cost')">
+
+      <option value="">Price</option>
+      <option value="0">$20 - $25</option>
+      <option value="1">$25 - $30</option>
+      <option value="2">$30 - $35</option>
+      <option value="3">$35 - $40</option>
+    </select>
+
+     <label for="rating">Rating</label>
+       <select name="rating" id="rating" @change="filterBy($event, 'rating')">
+      <option value="">Rating</option>
+      <option value="0">1</option>
+      <option value="1">2</option>
+      <option value="2">3</option>
+      <option value="3">4</option>
+      <option value="4">5</option>
+    </select>
    
        <label for="order">Order&nbsp;from</label>
-       <select name="order" id="order">
-           <option value="">Select an option</option>
-           <option value="asc">Price: high to low</option>
-           <option value="desc">Price: low to high</option>
-           <option value="AtoZ">A -> Z</option>
-           <option value="ZtoA">Z -> A</option>
+       <select name="order" id="order" @change="sortBy($event)">
+
+           <option value=" ">Select an option</option>
+           <option value="0">A -> Z</option>
+           <option value="1">Z -> A</option>
+           <option value="2">Price: high to low</option>
+           <option value="3">Price: low to high</option>
        </select>
+
     </section>
-   
+
 
   <div class="shop__item">
     <RouterLink
@@ -45,22 +66,22 @@
     </RouterLink>
   </div>
 </div>
-
 <Footers/>
 </template>
 
 <script>
 import { mapStores } from "pinia";
-import { useProductsStore } from "../stores/products";
+import { useProductsStore } from "../stores/products.js";
 import Footers from '../components/footer.vue'
+
 
 export default {
 
   data(){
     return{
-      buscar: ''
     };
   },
+
 
   components: {
     Footers
@@ -76,6 +97,7 @@ export default {
 
   mounted() {
     this.productsStore.loadProducts();
+    this.drawProducts = this.allProducts;
   },
 
   methods: {
@@ -84,9 +106,28 @@ export default {
         return '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
 
-  }
+   /* search (term) {
+      this.resetPosts()
+      this.productsStore = this.productsStore.filter((product) => {
+        return product.id.toLowerCase().includes(term.toLowerCase())
+      })
+    },
 
+    resetPosts () {
+      this.productsStore = []
+    },*/
 
+    sortBy(event) {
+      let selection = event.target.value;
+      this.productsStore.sortProducts(selection);
+    },
+
+    filterBy(event, caller) {
+      let selected = event.target.value;
+      this.productsStore.filterProducts(selected, caller);
+    },
+  },
+  
 };
 </script>
 
@@ -140,6 +181,16 @@ export default {
   }
 
   #order{
+      @include filter();
+      margin-right: 2%
+  }
+
+  #price{
+      @include filter();
+      margin-right: 2%
+  }
+
+  #rating{
       @include filter();
       margin-right: 2%
   }

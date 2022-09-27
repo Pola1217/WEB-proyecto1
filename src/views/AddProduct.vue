@@ -16,7 +16,7 @@
       <option value="coffee">Coffee</option>
       <option value="tea">Tea</option>
       <option value="accessories">Accessories</option>
-      <option value="bundle">Bundle</option>
+      <option value="kit">Kit</option>
       </select>
 
       <textarea 
@@ -63,7 +63,6 @@
   
   </div>
 
-<Footers/>
 
 </template>
 
@@ -85,7 +84,7 @@ export default {
       name: "",
       category: "",
       description: "",
-      price: "",
+      price: 0,
       rating: 0,
       reader: new FileReader(),
       imgURL: null
