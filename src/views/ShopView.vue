@@ -7,7 +7,7 @@
     <section class="shop__filters">
       
     <label for="category">Categories</label>
-       <select name="category" id="category" @change="filterBy($event, 'category')">
+       <select name="category" id="category" @change="filterBy($event,'type')">
        
            <option value=" ">All</option>
            <option value="0">Coffee</option>
@@ -18,17 +18,17 @@
        </select>
 
     <label for="price">Prices</label>
-       <select name="price" id="price" @change="filterBy($event, 'cost')">
+       <select name="price" id="price" @change="filterBy($event,'cost')">
 
       <option value="">Price</option>
-      <option value="0">$20 - $25</option>
-      <option value="1">$25 - $30</option>
-      <option value="2">$30 - $35</option>
-      <option value="3">$35 - $40</option>
+      <option value="0">$20 or less</option>
+      <option value="1">$30 or less</option>
+      <option value="2">$50 or less</option>
+      <option value="3">$50 +</option>
     </select>
 
      <label for="rating">Rating</label>
-       <select name="rating" id="rating" @change="filterBy($event, 'rating')">
+       <select name="rating" id="rating" @change="filterBy($event,'rating')">
       <option value="">Rating</option>
       <option value="0">1</option>
       <option value="1">2</option>
@@ -43,8 +43,8 @@
            <option value=" ">Select an option</option>
            <option value="0">A -> Z</option>
            <option value="1">Z -> A</option>
-           <option value="2">Price: high to low</option>
-           <option value="3">Price: low to high</option>
+           <option value="2">Price: low to high</option>
+           <option value="3">Price: high to low</option>
        </select>
 
     </section>
@@ -124,7 +124,7 @@ export default {
 
     filterBy(event, caller) {
       let selected = event.target.value;
-      this.productsStore.filterProducts(selected, caller);
+      this.productsStore.filter(selected, caller);
     },
   },
   

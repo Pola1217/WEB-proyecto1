@@ -13,10 +13,11 @@
 
       <select placeholder='category' name="category" id="category" class="form__input" v-model="type">
       <option hidden disabled selected value>Select a category</option>
-      <option value="coffee">Coffee</option>
-      <option value="tea">Tea</option>
-      <option value="accessories">Accessories</option>
-      <option value="kit">Kit</option>
+      <option value="Coffee">Coffee</option>
+      <option value="Tea">Tea</option>
+      <option value="Accessories">Accessories</option>
+      <option value="Kit">Kit</option>
+      <option value="Single">Single Serve</option>
       </select>
 
       <textarea 
@@ -84,7 +85,7 @@ export default {
       name: "",
       category: "",
       description: "",
-      price: 0,
+      price: "",
       rating: 0,
       reader: new FileReader(),
       imgURL: null
@@ -97,7 +98,11 @@ export default {
   },
 
   methods: {
+
     createNewProduct() {
+      const idLowerCase = this.name.toLowerCase();
+      const id = idLowerCase.replace(/\s+/g, "-");
+      
       const newProduct = {
         name: this.name,
         category: this.category,
@@ -121,7 +126,6 @@ export default {
       this.reader.readAsDataURL(e.target.files[0]);
       this.reader.addEventListener("load", () => {
         this.imgURL = this.reader.result;
-        console.log('added')
       });
     },
 

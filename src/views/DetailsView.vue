@@ -72,6 +72,7 @@
         &__pic{
           width:100%;
         height: 500px;
+        border-radius: 10%;
         object-fit: contain;
         }
     }

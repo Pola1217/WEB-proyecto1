@@ -157,9 +157,6 @@ footer {
   }
 
   }
-  .header__icon{
-  
-  }
   }
 
 
