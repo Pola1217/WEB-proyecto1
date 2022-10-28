@@ -5,50 +5,34 @@ import { auth } from "../firebase/config";
 
 export const useAuthenticationStore = defineStore("authentication", {
     state: () => ({
-        user: null,
+        //user: null,
         userLogged: null,
         isAdmin: false,
+        auth:auth,
     }),
 
     actions: {
 
-        signIn(email, password) {
-            console.log('llamando sign in')
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    console.log('usuario loggeado', user)
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
-                });
-        },
-        signUp(email, password) {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-            
-                    const user = userCredential.user;
-                    console.log('usuario creado', user)
-                    alert('usuario creado', user);
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
-                });
+        async signIn(email, password) {
+            try {
+                const {user} = await signInWithEmailAndPassword(auth, email, password);
+                console.log("Logged in");
+                alert('logged in');
+            } catch (error) {
+                alert(error.message)
+            }
         },
 
-        async newUserAwait(email, password) {
-            try{
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-            console.log('usuario creado', userCredential.user)
-        } catch(error) {
-            alert(errorMessage);
-        }
+        async signUp(email, password) {
+            try {
+                const {user} = await createUserWithEmailAndPassword(auth, email, password);
+                console.log('Signed up');
+                return user;
+            } catch (error) {
+                alert(error.message);
+            }
         },
+
 
       logOut(){
           signOut(auth).then(() => {

@@ -3,14 +3,18 @@ import _, { map } from 'underscore';
 
 export const useProductsStore = defineStore("products", {
     state: () => ({
+        id: null,
+        cart: null,
         products: [],
-
+        firebaseProduct: [],
+        shoppingcart: [],
         localStorageProducts: [],
         
     }),
 
     getters: {
         getProducts: (state) => [...state.products],
+        getShoppingcart: (state) => [...state.shoppingcart],
     },
 
     actions: {
