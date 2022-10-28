@@ -53,8 +53,8 @@ export default {
       };
 
       //auth
-      if (this.password == this.passwordConf) {
-        this.authenticationStore.signUp(this.email, this.password);
+      if (this.password === this.passwordConf) {
+        this.authenticationStore.newUserAwait(this.email, this.password);
       }else{
         alert('Passwords dont match')
       }

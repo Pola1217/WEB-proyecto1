@@ -5,7 +5,7 @@ import { auth } from "../firebase/config";
 
 export const useAuthenticationStore = defineStore("authentication", {
     state: () => ({
-        //user: null,
+        user: null,
         userLogged: null,
         isAdmin: false,
         auth:auth,
@@ -13,26 +13,43 @@ export const useAuthenticationStore = defineStore("authentication", {
 
     actions: {
 
-        async signIn(email, password) {
-            try {
-                const {user} = await signInWithEmailAndPassword(auth, email, password);
-                console.log("Logged in");
-                alert('logged in');
-            } catch (error) {
-                alert(error.message)
-            }
+       signIn(email, password) {
+            console.log('llamando sign in')
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log('usuario loggeado', user)
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
         },
 
-        async signUp(email, password) {
-            try {
-                const {user} = await createUserWithEmailAndPassword(auth, email, password);
-                console.log('Signed up');
-                return user;
-            } catch (error) {
-                alert(error.message);
-            }
+        signUp(email, password) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+            
+                    const user = userCredential.user;
+                    console.log('usuario creado', user)
+                    alert('usuario creado');
+                })
+                .catch((error) => {
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
         },
 
+        async newUserAwait(email, password) {
+            try{
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            console.log('usuario creado', userCredential.user)
+        } catch(error) {
+            alert(errorMessage);
+        }
+        },
 
       logOut(){
           signOut(auth).then(() => {
@@ -47,8 +64,8 @@ export const useAuthenticationStore = defineStore("authentication", {
             if (user) {
                 this.userLogged = user;
                 
-                //rina
-                if (user.uid == "NxYWOCuyICeH1Cob38ZOqDFkNr33") {
+                //bajovo@
+                if (user.uid == "C8hyxIy765MOBaDkR7Hi2x6n3wT2") {
                     this.isAdmin = true;
                     alert(this.isAdmin, "this is admin");
                 }
