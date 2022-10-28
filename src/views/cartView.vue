@@ -1,0 +1,308 @@
+<template>
+  <section class="cart-checkout">
+    <!--CART-->
+
+    
+    <div class="CART">
+    <h2 id="CART__title" class="CART__title">Cart</h2>
+    <ul class="cart" id="cart">
+    </ul>
+
+
+    <div id="total" class="total"></div>
+    </div>
+
+    <!--CHECKOUT-->
+    
+    <div class="CHECKOUT">
+    
+    <section class="checkout" id="checkout">
+
+        <h2 id="checkout__title" class="checkout__title">Checkout</h2>
+            <h2 class="checkout__subtitle">Shipping information</h2>
+    
+            <form class="checkout__Form" id="checkout__Form">
+                <input type="text" id="name" class="checkout__input" placeholder="Name">
+    
+                <input type="text" id="address" class="checkout__input" placeholder="Address">
+    
+                <input type="text" id="city" class="checkout__input" placeholder="City">
+    
+                <input type="text" id="cellphone" class="checkout__input" placeholder="Cellphone number">
+
+            <h2 class="checkout__subtitle">Shipping Selection</h2>
+
+                <select id="shipping" class="checkout__shipping">
+                    <option hidden disabled selected value>Select an option </option>
+                    <option value="standard">Standard (3 - 7 Buisness Days)</option>
+                    <option value="premium">Premium (2 Buisness Days)</option>
+                </select>
+
+                <p class="shipping__price" id="shipping__price"></p>
+    
+            <h2 class="checkout__subtitle">Payment information</h2>
+                <input type="number" id="card" class="checkout__input" placeholder="Card number">
+
+                    <div class="checkout__Form__row">
+
+                        <input type="date" id="expiration" class="checkout__Form__row__date" placeholder="expiration">
+                        <input type="text" id="code" class="checkout__Form__row__code" placeholder="Security code">
+
+                    </div>
+    
+                <input type="submit" value="BUY NOW" class="checkout__submit">
+
+            </form>
+        </section>
+        </div>
+    </section>
+
+</template>
+
+<script>
+export default {
+
+    data() {
+      return { 
+        
+      };
+    },
+
+    async createFirebaseCart(db, userId, cart) {
+    try {
+        await setDoc(doc(db, "cart", userId), {
+            cart
+        });
+    } catch (e) {
+        console.log(e);
+    }
+},
+
+async getFirebaseCart(db, userId) {
+    const docRef = doc(db, "cart", userId);
+    const docSnap = await getDoc(docRef);
+    const result = docSnap.data();
+    return (result) ? result.cart : [];
+
+},
+
+async createFirebaseOrder (db, userId, order) {
+    try {
+        await setDoc(doc(db, "order", userId), {
+            order
+        });
+        console.log(db);
+    } catch (e) {
+        console.log(e);
+    }
+} ,  
+
+async deleteCart(db, userId) {
+    try {
+        const docRef = doc(db, "cart", userId);
+        await deleteDoc(docRef)
+    } catch (error) {
+        console.log(error);
+    }
+},
+
+}
+</script>
+
+<style lang="scss">
+
+$font-color: #000000;
+$main-font: 'Raleway';
+$sub-font: 'RalewayLight';
+
+@mixin titles {
+    font-family: $main-font;
+    color: $font-color;
+    font-size: 2em;
+    padding-top: 7%;
+    margin-left: 5%;
+}
+@mixin subtitles {
+    font-family: $main-font;
+    color: $font-color;
+    padding-top: 2%;
+    font-size: 1.2em;
+    margin-left: 50px;
+}
+
+
+@mixin inputs {
+    font-family:  $sub-font;
+    font-size: 0.95em;
+    line-height: 21px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    width: 100%;
+    height: 20%;
+    margin-bottom: 17px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 25px;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+ul{
+    list-style: none;
+}
+
+.flex{
+    display: flex;
+}
+
+.align_items_center{
+    align-items: center;    
+}
+
+.cart-checkout{
+    display: flex;
+    margin-top: 1%;
+}
+
+.CART{
+    width: 44%;
+    margin-left: 40px;
+
+    
+    &__title{
+        @include titles();
+        margin-top: 5%;
+        margin-bottom: 2%;
+    }
+}
+
+.total{
+    border-top: 2px solid #000000;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 10%;
+    padding-left: 55%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-family: 'SuisseMono';
+}
+
+.product{
+    width: 100%;
+    padding-left: 5%;
+    padding-bottom: 2%;
+    display:flex;
+    align-items: center;
+
+    &__image {
+        width:100%;
+        height: 300px;
+        object-fit: contain;
+    }
+
+    &__name{
+        width: 100%;
+        margin-left: 5%;
+        font-family: $sub-font;
+        font-size: 0.90em;
+        color: $font-color;
+    }
+
+    &__price{
+        width: 100%;
+        margin-top: 10%;
+        margin-left: 10%;
+        font-family: $main-font;
+        font-size: 1.20em;
+        color: $font-color;
+    }
+
+    &__delete{
+        width: 50%;
+        height: 30%;  
+        padding: 5px;
+        font-family: $main-font;
+        background: none;
+        font-size: 0.90em;
+        color:#ff5f37;
+        border: none;
+
+        &:hover{
+           color: #e40000;
+        }
+    }
+}
+
+.checkout{
+    width: 80%;
+    height: 100%;
+    margin-left: 15%;
+    border-left: 1px solid #adadad;
+
+    &__title{
+        @include titles();
+        margin-top: 5%;
+    }
+
+    &__subtitle{
+        @include subtitles();
+    }
+
+    &__Form{
+        position: relative;
+        padding-left: 5%;
+        
+        &__row{
+            display: flex;
+            align-items: center;
+            gap: 2%;
+            width: 100%;
+    
+            &__date{
+                width: 10%;
+                @include inputs();
+            }
+            
+            &__code{
+                width: 10%;
+                @include inputs();
+            }
+    
+        }
+    }
+
+    &__input{
+        @include inputs();
+    }
+    
+    &__shipping{
+        @include inputs();
+    }
+
+    &__submit{
+        width: 55%;
+        height: 20%;
+        padding: 15px;
+        font-family: $main-font;
+        color: rgb(255, 255, 255);
+        font-size: 0.85em;
+        background-color:#ff5f37;
+        border: none;
+        margin: 20px 0 0 125px;
+   
+
+        &:hover{
+            background-color: #e40000;
+        }
+    }
+
+    
+}
+
+</style>

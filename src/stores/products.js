@@ -318,6 +318,36 @@ export const useProductsStore = defineStore("products", {
 
             
         },
+
+        async addProductToCart(userId, productInfo){
+
+            console.log("SHOWING", userId, productInfo.id);
+        
+            try{
+                if(userId != null){
+                    await setDoc(doc(db, "users", userId, "cart", productInfo.id), productInfo);
+                    alert("Product added to cart");
+                }
+                else{
+                    alert("Please log in before adding products to cart");
+                }
+              }
+        
+              catch(error){
+                console.log(error);
+              }
+          },
+        
+          async getCart(userId){
+            const querySnapshot = await getDocs(collection(db, "users", userId, "cart"));
+            querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+        
+                this.cartData = doc.data();
+            });
+          },
+        
     }
+
 
 });

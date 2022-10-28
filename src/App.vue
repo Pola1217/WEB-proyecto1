@@ -1,10 +1,20 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import {useAuthenticationStore} from './stores/authentication'
+import { mapStores } from "pinia";
 
 export default {
   components: {
     RouterLink, RouterView
-  }
+  },
+
+  computed: {
+    ...mapStores(useAuthenticationStore),
+
+    admin(){
+        return this.useAuthenticationStore.checkAdmin();
+    }
+  },
 }
 </script>
 
@@ -26,11 +36,9 @@ export default {
       </RouterLink>
     </div>
 
-    
-
       <div class="header__profile">
-          <RouterLink to="/" class="header__profile__item" >Profile</RouterLink>
-          <RouterLink to="/" class="header__profile__item" >Cart</RouterLink>
+          <RouterLink to="/signIn" class="header__profile__item" >Profile</RouterLink>
+          <RouterLink to="/cart" class="header__profile__item" >Cart</RouterLink>
       </div>
 
   </header>

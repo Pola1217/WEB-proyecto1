@@ -1,21 +1,20 @@
 <template>
-    <div class="product">
+    <div class="product" >
 
-      <img :src=currentProduct.image alt="preview" class="product__pic">
+      <img :src="currentProduct.image" alt="preview" class="product__pic">
 
       <div class="product__info">
-        <p class="product__info__name"> {{$route.params.productId}}</p>
+        <p class="product__info__name"> {{currentProduct.name}}</p>
 
         <star-rating 
         class="product__info__star"
         :star-size="20"
-        :rating="this.currentProduct.rating"></star-rating>    
+        :rating="currentProduct.rating"></star-rating>    
 
-        <p class="product__info__desc" > {{ currentProduct.description }}</p>
-        <p class="product__info__price"> {{  formatPrice (currentProduct.price) }}</p>  
-        <button class="product__info__btn">Add to cart</button>
+        <p class="product__info__desc" > {{currentProduct.description}}</p>
+        <p class="product__info__price"> {{formatPrice (currentProduct.price)}}</p>  
+        <button class="product__info__btn"  @click="addToCart">Add to cart</button>
 
-        
       </div>
       
     </div>
@@ -28,26 +27,30 @@
   import { mapStores } from "pinia";
   import Footers from '../components/footer.vue'
   import { useProductsStore } from "../stores/products";
+import { useFirestoreStore } from "../stores/firestore";
   
   export default {
     data() {
-      return { currentProduct: {} };
+      return { 
+        currentProduct: {} ,
+      };
     },
 
     components: {
     StarRating,
     Footers
-
-  },
-
-    computed: {
-      ...mapStores(useProductsStore),
     },
 
-    mounted() {
-    this.currentProduct = this.productsStore.getProductsById(
+    computed: {
+      ...mapStores(useProductsStore, useFirestoreStore),
+    },
+
+    async mounted() {
+
+      this.currentProduct = await this.firestoreStore.getIndiProduct(
         this.$route.params.productId
-      );
+        );
+    
     },
 
     methods: {
@@ -55,6 +58,10 @@
         let val = (value/1).toFixed(2).replace('.', ',')
         return '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
+
+    addToCart(){
+        this.productsStore.addProductToCart(this.getUser, this.current);
+    }
 
   },
 
@@ -70,9 +77,9 @@
         align-items: center;
            
         &__pic{
-          width:100%;
+        width:100%;
         height: 500px;
-        border-radius: 10%;
+        border-radius: 20%;
         object-fit: contain;
         }
     }

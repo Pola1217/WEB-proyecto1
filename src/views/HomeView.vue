@@ -91,17 +91,20 @@ export default {
         width: 80%;
     }
 }
+.subscribe{
+
+display: none;
+
+&__media{
+    
+    margin-top: 5%;
+    width: 100%;
+    height: 250px;
+   
+}
+}
 }
 
-.subscribe{
-    display: none;
-    &__media{
-        display: flex;
-        margin-top: 5%;
-        width: 100%;
-        height: 250px;
-       
-    }
-}
+
 
 </style>

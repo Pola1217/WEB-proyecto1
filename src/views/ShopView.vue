@@ -1,10 +1,10 @@
 <template>
 
-  <div class="shop">
+  <div class="top">
 
-    <h1 class="shop__title">shop all</h1>
+    <h1 class="top__title">SHOP ALL</h1>
 
-    <section class="shop__filters">
+    <section class="top__filters">
       
     <label for="category">Categories</label>
        <select name="category" id="category" @change="filterBy($event,'type')">
@@ -49,73 +49,60 @@
 
     </section>
 
-
-  <div class="shop__item">
-    <RouterLink
-      v-for="product in allProducts"
-      :key="product.name"
-      :to="`/detail/${product.name}`"
-    >
-    <div class="shop__item__indi">
-      <img class="shop__item__indi__pic" :src=product.image alt="preview">
-      <h4 class="shop__item__indi__name">{{ product.name }}</h4>
-      <p class="shop__item__indi__prince">{{ formatPrice(product.price)}}</p>
-      <button class="shop__item__indi__btn">Add to cart</button>
     </div>
+
+  <div class="shop">
+    <RouterLink
+      v-for="product in drawProducts"
+      :key="product.id"
+      :to="`/detail/${product.id}`"
+    >
+      <img class="shop__pic" :src=product.image alt="preview">
+      <div class="shop__info">
+        <h4 class="shop__info__name">{{ product.name }}</h4>
+        <p class="shop__info__price">{{ formatPrice(product.price)}}</p>
+      </div>
     
     </RouterLink>
   </div>
-</div>
-<Footers/>
+  <Footers/>
 </template>
 
 <script>
 import { mapStores } from "pinia";
-import { useProductsStore } from "../stores/products.js";
+import { useProductsStore } from "../stores/products";
 import Footers from '../components/footer.vue'
+import { useFirestoreStore } from "../stores/firestore";
 
 
 export default {
 
   data(){
     return{
+      firebaseProducts: [],
+      drawProducts: [],
     };
   },
 
 
   components: {
-    Footers
+    Footers,
   },
 
   computed: {
-    ...mapStores(useProductsStore),
-    allProducts() {
+    ...mapStores(useProductsStore, useFirestoreStore),
+    /*allProducts() {
       return this.productsStore.getProducts;
-  },
+  },*/
 
   },
 
-  mounted() {
-    this.productsStore.loadProducts();
-    this.drawProducts = this.allProducts;
-  },
-
+ 
   methods: {
     formatPrice(value) {
         let val = (value/1).toFixed(2).replace('.', ',')
         return '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
-
-   /* search (term) {
-      this.resetPosts()
-      this.productsStore = this.productsStore.filter((product) => {
-        return product.id.toLowerCase().includes(term.toLowerCase())
-      })
-    },
-
-    resetPosts () {
-      this.productsStore = []
-    },*/
 
     sortBy(event) {
       let selection = event.target.value;
@@ -126,9 +113,17 @@ export default {
       let selected = event.target.value;
       this.productsStore.filter(selected, caller);
     },
+
+},
+
+  async mounted() {
+
+  this.drawProducts = await this.firestoreStore.getProducts();
+  
   },
   
 };
+
 </script>
 
 <style lang="scss">
@@ -136,16 +131,17 @@ export default {
 @mixin filter {
     font-size: 0.95em;
     line-height: 21px;
+    text-align: center;
     background: #FFFFFF;
     border: 1px solid #000000;
     box-sizing: border-box;
-    width: 200px;
+    width: 150px;
     height: 3%;
     padding: 5px;
     border-radius: 5px;
 }
 
-.shop{
+.top{
 
     display: flex;
     flex-direction: column;
@@ -155,8 +151,8 @@ export default {
 
   &__title{
         align-items: center;
-        font-family: 'Aboreto';
-        font-size: 2em;
+        font-family: 'Capuche';
+        font-size: 3em;
         color: #000000;
         padding-bottom: 2%;
   }
@@ -166,7 +162,7 @@ export default {
     font-size: 0.95em;
     display: flex;
     flex-direction: row;
-    padding-bottom: 3%;
+    margin-right: 45px;
     align-items: center;
 }
 
@@ -182,7 +178,6 @@ export default {
 
   #order{
       @include filter();
-      margin-right: 2%
   }
 
   #price{
@@ -194,56 +189,47 @@ export default {
       @include filter();
       margin-right: 2%
   }
+}
 
-  &__item{
+  .shop{
     display: grid;
-    grid-template-columns: repeat(4, 2fr);
-    gap: 5px;
-
-    &__indi{
-    margin-inline: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+    grid-template-columns: repeat(5, 100px);
+    padding: 5%;
+    column-gap: 14%;
+    row-gap: 3%;
+    
      &__pic{
-      width: 250px;
-      height: 290px;
+      width: 200px;
+      height: 220px;
       border-radius: 9%;
-      margin-top: 30px;
+      padding-bottom: 9%;
+       
 
       &:hover{
-        border: 2px solid #000225;
+        box-shadow: 0 4px 8px 0 rgba(0, 50, 166, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }
      }
 
-     &__name{
+     &__info{
+      height: 50%;
+
+      &__name{
       font-family: 'Raleway';
-      font-size: 1.2em;
-      padding: 3%;
+      font-size: 1em;
+      
      }
 
-      &__btn{ 
-        width: 50%;
-        height: 40px;
-        background: none;
-        border: 2px solid #000225;
-        border-radius: 5px;
-        box-sizing: border-box;
-        text-align: center;
-        font-family: 'Raleway';
-        letter-spacing: 0.2em;
-        color: #000225;
-        font-size: 0.6em;
-
-        &:hover{
-            background-color: #2c77b5;
-            color: #ffffff;
-        }
+     &__price{
+      font-family: 'Raleway';
+      padding-top: 5%;
+      font-size: 0.9em;
+      color: rgb(4, 4, 83);
+     }
+     
       }
       }
-    }
-  }
+    
+  
 
 
 @media (max-width:600px) {
@@ -255,42 +241,47 @@ export default {
         padding: 0% !important;
     }
 
-  .shop{
-    
+  .top{
     margin-top: 20%;
     
-
   &__title{
-       font-size: 1.5em;
+       font-size: 1em;
   }
 
   &__filters {
     flex-direction: column;
+    margin-left: 50px;
+}
 }
 
-  &__item{
+ .shop{
+  align-items: center;
     display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    gap: 0px;
+    grid-template-columns: repeat(2, 100px);
+    column-gap: 9%;
+    row-gap: 3%;
+    justify-content: space-evenly;
 
-    &__indi{
-      margin-inline: 10px;
+    &__pic{
+      width: 100px;
+      height: 115px;
+    }
+
+    &__info{
 
       &__name{
       width: 50%;
-      font-size: 1em;
+      font-size: 0.6em;
      }
 
-      &__pic{
-      width: 100px;
-      height: 115px;
-      }
-      &__btn{ 
-        margin: 5%;
-      }
+     &__price{
+      font-size: 0.5em;
+      padding-bottom: 5%;
+     }
+
     }
   }
 }
-}
+
 
 </style>

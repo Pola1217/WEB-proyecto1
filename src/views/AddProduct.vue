@@ -11,7 +11,7 @@
       id='Name'
       class='form__input'/>
 
-      <select placeholder='category' name="category" id="category" class="form__input" v-model="type">
+      <select placeholder='category' name="category" id="category" class="form__input" v-model="category">
       <option hidden disabled selected value>Select a category</option>
       <option value="Coffee">Coffee</option>
       <option value="Tea">Tea</option>
@@ -39,7 +39,6 @@
 
       <star-rating
         v-bind:increment="0.5"
-        v-bind:max-rating="5"
         v-model:rating="rating"
         inactive-color="#000"
         active-color="#F2BA42"
@@ -64,28 +63,26 @@
   
   </div>
 
-
 </template>
 
 <script>
 import { mapStores } from "pinia";
 import StarRating from 'vue-star-rating'
-import Footers from '../components/footer.vue'
 import { useProductsStore } from "../stores/products.js";
+import { useFirestoreStore } from "../stores/firestore.js";
 
 export default {
 
   components: {
-    Footers,
     StarRating,
   },
 
   data() {
     return {
-      name: "",
-      category: "",
-      description: "",
-      price: "",
+      name: '',
+      category: '',
+      description: '',
+      price: '',
       rating: 0,
       reader: new FileReader(),
       imgURL: null
@@ -93,32 +90,37 @@ export default {
   },
 
   computed: {
-    ...mapStores(useProductsStore),
+    ...mapStores(useFirestoreStore, useProductsStore),
     
   },
 
   methods: {
 
-    createNewProduct() {
+    async createNewProduct() {
+     
       const idLowerCase = this.name.toLowerCase();
       const id = idLowerCase.replace(/\s+/g, "-");
-      
+
       const newProduct = {
+        id:id,
         name: this.name,
         category: this.category,
         description: this.description,
         price: this.price,
         rating: this.rating,
-        image: this.imgURL
+        image: this.imgURL,
+
       };
 
-      this.productsStore.newProduct(newProduct);
+      //firebase storage
+      await this.firestoreStore.addProduct(newProduct);
+
+      //local
+      //this.productsStore.newProduct(newProduct);
       
       this.name = '';
-      this.category = '';
       this.description = '';
       this.price = '';
-      this.rating = '';
 
     },
 
@@ -129,6 +131,8 @@ export default {
       });
     },
 
+    
+
   }
 }
 
@@ -137,11 +141,11 @@ export default {
 <style lang="scss">
 
 .form{
-    position: absolute;
+    position:relative;
     width: 100%;
     display: flex;
     flex-direction: column;
-    top: 15%;
+    margin-top: 9%;
     flex-wrap: nowrap;
     align-items: center;
 

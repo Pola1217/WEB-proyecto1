@@ -37,11 +37,11 @@ a {
 }
 .footer {
     display: flex;
-    width: 100%;
+    width: 80%;
     align-items: center;
     font-family: 'RalewayLight';
     font-size: 1em;
-    margin: 80px 0 20PX 45px;
+    margin: 80px 0 20px 45px;
     
     &__social {
         display: flex;
