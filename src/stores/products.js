@@ -1,23 +1,95 @@
 import { defineStore } from "pinia";
 import _, { map } from 'underscore';
+import { db } from '../firebase/config';
+import { doc, setDoc, getDocs, collection, updateDoc } from "firebase/firestore";
 
 export const useProductsStore = defineStore("products", {
     state: () => ({
         id: null,
-        cart: null,
+        cartData: null,
         products: [],
-        firebaseProduct: [],
-        shoppingcart: [],
+        shoppingCart: [],
         localStorageProducts: [],
         
     }),
 
     getters: {
         getProducts: (state) => [...state.products],
-        getShoppingcart: (state) => [...state.shoppingcart],
+        getShoppingcart: (state) => [...state.shoppingCart],
     },
 
     actions: {
+
+        async defineDocs(){
+            const querySnapshot = await getDocs(collection(db, "items"));
+            querySnapshot.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+    
+            const productInfo= {
+                "id": doc.id,
+                "image": doc.data().image,
+                "name": doc.data().productName,
+                "price": doc.data().productPrice,
+                "rating": doc.data().productRating,
+                "category": doc.data().productCategory,
+            }
+    
+            this.products.push(productInfo);
+
+            });
+    
+          },
+    
+        async displayItem(){
+
+        this.list = [];
+        this.products = [];
+        this.defineDocs();
+    
+        console.log(this.products);
+        
+        let itemValue;
+        let object;
+    
+        let itemArr = [];
+    
+        for(let i = 0; i < localStorage.length; i++){
+            itemValue = localStorage.getItem(localStorage.key(i));
+            object = JSON.parse(itemValue);
+    
+            this.products.push(object);
+        }
+    
+        for(let j = 0; j < itemArr.length; j++){
+    
+            this.item = itemArr[j];
+            this.list.push(this.item);
+        }
+    
+    },
+
+    async uploadProduct(objectData){
+        let objectId = String(Math.floor(Math.random() *(999999-100000)+100000));
+
+        this.id = objectId;
+
+        let newProduct = objectData;
+        objectData.id = objectId;
+
+        try{
+            await setDoc(doc(db, "items", objectId), newProduct);
+            alert("Product uploaded");
+          }
+    
+          catch(error){
+            console.log(error);
+          }
+  },
+
+        getProductsById(id) {
+        const filteredProducts = this.products.filter((product) => id.toLowerCase() === product.name.toLowerCase());
+        return filteredProducts ? {...filteredProducts[0] } : null
+        },
 
         newProduct(product) {
             this.localStorageProducts.push(product);
@@ -197,11 +269,7 @@ export const useProductsStore = defineStore("products", {
             this.products = this.products.concat([...this.localStorageProducts]);
 
         },
-        
-        getProductsById(id) {
-            const filteredProducts = this.products.filter((product) => id.toLowerCase() === product.name.toLowerCase());
-            return filteredProducts ? {...filteredProducts[0] } : null
-        },
+
 
         sortProducts(order) {
 
@@ -323,35 +391,40 @@ export const useProductsStore = defineStore("products", {
             
         },
 
-        async addProductToCart(userId, productInfo){
+    async addProductToCart(userId, productInfo){
 
-            console.log("SHOWING", userId, productInfo.id);
+        try{
+            if(userId != null){
+                await setDoc(doc(db, "users", userId.uid, "order", productInfo.id), productInfo);
+                alert("Product added to cart");
+            }
+            else{
+                alert("Please log in to add products to cart");
+            }
+          }
+    
+          catch(error){
+            console.log(error);
+          }
+      },
+
+      async assingValuesToCart(data){
+        this.cartData = data;
+        this.shoppingCart.push(this.cartData);
+      },
+
+      async getCart(userId){
+
+        const querySnapshot = await getDocs(collection(db, "users", userId, "order"));
+
+        querySnapshot.forEach((doc) => {
         
-            try{
-                if(userId != null){
-                    await setDoc(doc(db, "users", userId, "cart", productInfo.id), productInfo);
-                    alert("Product added to cart");
-                }
-                else{
-                    alert("Please log in before adding products to cart");
-                }
-              }
-        
-              catch(error){
-                console.log(error);
-              }
-          },
-        
-          async getCart(userId){
-            const querySnapshot = await getDocs(collection(db, "users", userId, "cart"));
-            querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-        
-                this.cartData = doc.data();
-            });
-          },
-        
+        this.assingValuesToCart(doc.data())
+    
+        });
+      },
+    
+
     }
-
 
 });

@@ -6,6 +6,17 @@
     <div class="CART">
     <h2 id="CART__title" class="CART__title">Cart</h2>
     <ul class="cart" id="cart">
+    <RouterLink
+      v-for="products in rederCart"
+      :key="products.id"
+      :to="`/detail/${products.id}`"
+    >
+      <div class="shop__info">
+        <h4 class="shop__info__name">{{ products.name }}</h4>
+        <p class="shop__info__price">{{ formatPrice(products.price)}}</p>
+      </div>
+    
+    </RouterLink>
     </ul>
 
 
@@ -60,6 +71,14 @@
 </template>
 
 <script>
+
+
+import { useAuthenticationStore } from '../stores/authentication'
+import { useFirestoreStore } from "../stores/firestore.js";
+import {useProductsStore} from "../stores/products.js"
+import { mapStores } from "pinia";
+import { auth } from "../firebase/config"
+
 export default {
 
     data() {
@@ -68,6 +87,29 @@ export default {
       };
     },
 
+    computed: {
+            ...mapStores(useProductsStore, useAuthenticationStore),
+
+            rederCart(){
+                return this.productsStore.getShoppingcart;
+            },
+            
+            getUser(){
+                return this.authenticationStore.user
+            },
+            
+            getCartData(){
+                return this.productsStore.cartData
+            }, 
+        },
+
+        data(){
+            return {current: {}}
+        },
+
+        mounted(){
+            this.productsStore.getCart(this.getUser)
+        },
 
 
 }

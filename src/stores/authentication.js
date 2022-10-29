@@ -67,7 +67,7 @@ export const useAuthenticationStore = defineStore("authentication", {
                 //bajovo@
                 if (user.uid == "C8hyxIy765MOBaDkR7Hi2x6n3wT2") {
                     this.isAdmin = true;
-                    alert(this.isAdmin, "this is admin");
+                    alert("this is admin",this.isAdmin);
                 }
             } else {
                 console.log("No admin")

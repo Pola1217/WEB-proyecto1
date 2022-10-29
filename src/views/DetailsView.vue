@@ -8,8 +8,12 @@
 
         <star-rating 
         class="product__info__star"
+        v-model:rating="rating"
         :star-size="20"
-        :rating="currentProduct.rating"></star-rating>    
+        :rating="currentProduct.rating"
+        @click="rateProduct">
+      </star-rating>   
+
 
         <p class="product__info__desc" > {{currentProduct.description}}</p>
         <p class="product__info__price"> {{formatPrice (currentProduct.price)}}</p>  
@@ -27,12 +31,15 @@
   import { mapStores } from "pinia";
   import Footers from '../components/footer.vue'
   import { useProductsStore } from "../stores/products";
-import { useFirestoreStore } from "../stores/firestore";
+  import { useFirestoreStore } from "../stores/firestore";
+  import { useAuthenticationStore } from '../stores/authentication'
   
   export default {
     data() {
       return { 
         currentProduct: {} ,
+        rating: null,
+        userRating: null,
       };
     },
 
@@ -42,8 +49,15 @@ import { useFirestoreStore } from "../stores/firestore";
     },
 
     computed: {
-      ...mapStores(useProductsStore, useFirestoreStore),
+
+      ...mapStores( useProductsStore, useFirestoreStore, useAuthenticationStore),
+
+      getUser(){
+                return this.authenticationStore.user
+        },
+    
     },
+
 
     async mounted() {
 
@@ -60,7 +74,65 @@ import { useFirestoreStore } from "../stores/firestore";
     },
 
     addToCart(){
-        this.productsStore.addProductToCart(this.getUser, this.current);
+        this.productsStore.addProductToCart(this.getUser, this.currentProduct);
+    },
+
+    async rateProduct() {
+      if (this.authenticationStore.getUser() !== null) {
+
+        //User info
+        let uid = this.authenticationStore.getUser().uid;
+        let user = await this.firestoreStore.getUser(uid);
+
+        //Check if user has rated 
+        if (!user.rating || !user.rating.includes(this.currentProduct.id) && this.rating !== null) {
+
+          //Adds books rated by user to list, to avoid voting more than once
+          this.firestoreStore.addUserRatingList(uid, this.userRatings(user));
+
+          //Add rating to book
+          this.firestoreStore.addProductRatingList(this.currentProduct.id, this.productRating(this.currentProduct));
+        } else {
+          alert("You've already voted!");
+
+        }
+      } else {
+
+        alert("Please sign in before voting");
+      }
+      //Change book rating
+      this.changeRating(this.currentProduct);
+    },
+
+    userRatings(user) {
+      let userRatingArray;
+
+      if (user.rating === null || user.rating === undefined) {
+        userRatingArray = [this.currentProduct.id];
+
+      } else if (user.rating.length > 0) {
+
+        userRatingArray = [...user.rating, this.currentProduct.id];
+      }
+      return userRatingArray;
+    },
+
+    productRating(product) {
+
+      let RatingArray;
+
+      if (product.ratingList == null || product.ratingList == undefined) {
+        RatingArray = [this.rating];
+      } else if (product.ratingList.length > 0) {
+        RatingArray = [...product.ratingList, this.rating];
+      }
+      return RatingArray;
+    },
+
+    changeRating(product) {
+
+      const average = product.ratingList.reduce((a, b) => a + b, 0) / product.ratingList.length;
+      this.firestoreStore.updateRating(this.currentProduct.id, average);
     }
 
   },
