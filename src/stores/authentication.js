@@ -54,7 +54,6 @@ export const useAuthenticationStore = defineStore("authentication", {
       logOut(){
           signOut(auth).then(() => {
               console.log('user loged out')
-              alert('user loged out');
             }).catch((error) => {
               alert(error);
             });

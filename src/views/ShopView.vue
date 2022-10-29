@@ -91,9 +91,7 @@ export default {
 
   computed: {
     ...mapStores(useProductsStore, useFirestoreStore),
-    /*allProducts() {
-      return this.productsStore.getProducts;
-  },*/
+
 
   },
 

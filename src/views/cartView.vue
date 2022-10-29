@@ -1,75 +1,75 @@
 <template>
-  <section class="cart-checkout">
-    <!--CART-->
-
-    
-    <div class="CART">
-    <h2 id="CART__title" class="CART__title">Cart</h2>
-    <ul class="cart" id="cart">
-    <RouterLink
-      v-for="products in rederCart"
-      :key="products.id"
-      :to="`/detail/${products.id}`"
-    >
-      <img class="shop__pic" :src=products.image alt="preview">
-      <div class="shop__info">
-        <h4 class="shop__info__name">{{ products.name }}</h4>
-        <p class="shop__info__price">{{ formatPrice(products.price)}}</p>
-      </div>
-    
-    </RouterLink>
-    </ul>
-
-
-    <div id="total" class="total"></div>
-    </div>
-
-    <!--CHECKOUT-->
-    
-    <div class="CHECKOUT">
-    
-    <section class="checkout" id="checkout">
-
-        <h2 id="checkout__title" class="checkout__title">Checkout</h2>
-            <h2 class="checkout__subtitle">Shipping information</h2>
-    
-            <form class="checkout__Form" id="checkout__Form">
-                <input type="text" id="name" class="checkout__input" placeholder="Name">
-    
-                <input type="text" id="address" class="checkout__input" placeholder="Address">
-    
-                <input type="text" id="city" class="checkout__input" placeholder="City">
-    
-                <input type="text" id="cellphone" class="checkout__input" placeholder="Cellphone number">
-
-            <h2 class="checkout__subtitle">Shipping Selection</h2>
-
-                <select id="shipping" class="checkout__shipping">
-                    <option hidden disabled selected value>Select an option </option>
-                    <option value="standard">Standard (3 - 7 Buisness Days)</option>
-                    <option value="premium">Premium (2 Buisness Days)</option>
-                </select>
-
-                <p class="shipping__price" id="shipping__price"></p>
-    
-            <h2 class="checkout__subtitle">Payment information</h2>
-                <input type="number" id="card" class="checkout__input" placeholder="Card number">
-
-                    <div class="checkout__Form__row">
-
-                        <input type="date" id="expiration" class="checkout__Form__row__date" placeholder="expiration">
-                        <input type="text" id="code" class="checkout__Form__row__code" placeholder="Security code">
-
-                    </div>
-    
-                <input type="submit" value="BUY NOW" class="checkout__submit">
-
-            </form>
-        </section>
+    <section class="cart-checkout">
+      <!--CART-->
+  
+      
+      <div class="CART">
+      <h2 id="CART__title" class="CART__title">Cart</h2>
+      <ul class="cart" id="cart">
+      <RouterLink
+        v-for="products in rederCart"
+        :key="products.id"
+        :to="`/detail/${products.id}`"
+      >
+        <img class="shop__pic" :src=products.image alt="preview">
+        <div class="shop__info">
+          <h4 class="shop__info__name">{{ products.name }}</h4>
+          <p class="shop__info__price">{{ formatPrice(products.price)}}</p>
         </div>
-    </section>
-
-</template>
+      
+      </RouterLink>
+      </ul>
+  
+  
+      <div id="total" class="total"></div>
+      </div>
+  
+      <!--CHECKOUT-->
+      
+      <div class="CHECKOUT">
+      
+      <section class="checkout" id="checkout">
+  
+          <h2 id="checkout__title" class="checkout__title">Checkout</h2>
+              <h2 class="checkout__subtitle">Shipping information</h2>
+      
+              <form class="checkout__Form" id="checkout__Form">
+                  <input type="text" id="name" class="checkout__input" placeholder="Name">
+      
+                  <input type="text" id="address" class="checkout__input" placeholder="Address">
+      
+                  <input type="text" id="city" class="checkout__input" placeholder="City">
+      
+                  <input type="text" id="cellphone" class="checkout__input" placeholder="Cellphone number">
+  
+              <h2 class="checkout__subtitle">Shipping Selection</h2>
+  
+                  <select id="shipping" class="checkout__shipping">
+                      <option hidden disabled selected value>Select an option </option>
+                      <option value="standard">Standard (3 - 7 Buisness Days)</option>
+                      <option value="premium">Premium (2 Buisness Days)</option>
+                  </select>
+  
+                  <p class="shipping__price" id="shipping__price"></p>
+      
+              <h2 class="checkout__subtitle">Payment information</h2>
+                  <input type="number" id="card" class="checkout__input" placeholder="Card number">
+  
+                      <div class="checkout__Form__row">
+  
+                          <input type="date" id="expiration" class="checkout__Form__row__date" placeholder="expiration">
+                          <input type="text" id="code" class="checkout__Form__row__code" placeholder="Security code">
+  
+                      </div>
+      
+                  <input type="submit" value="BUY NOW" class="checkout__submit">
+  
+              </form>
+          </section>
+          </div>
+      </section>
+  
+  </template>
 
 <script>
 
@@ -109,8 +109,7 @@ export default {
         },
 
         mounted(){
-
-            this.productsStore.getCart(this.getUser().uid)
+            this.productsStore.getCart(this.getUser)
         },
 
 

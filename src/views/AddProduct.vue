@@ -151,8 +151,8 @@ export default {
 
   &__title{
         align-items: center;
-        font-family: 'Raleway';
-        font-size: 1.80em;
+        font-family: 'RalewayLight';
+        font-size: 1.50em;
         color: #000000;
   }
 
@@ -174,36 +174,6 @@ export default {
       align-items: flex-end;
     }
   }
-
-  &__button{
-        font-family: 'RalewayLight';
-        font-size: 0.95em;
-        text-align: center;
-        color: #000000;
-        
-        width: 20%;
-        height: 15%;
-        padding: 0.8%;
-        margin-top: 25px;
-        
-        border: 2px solid #000000;
-        background-color: #FFFFFF;
-        box-sizing: border-box;
-        border-radius: 5px;
-
-        &:hover{
-              background-color: #2c77b5;
-              color: #ffffff;
-          }
-
-    }
-}
-
-@media (max-width:600px) {
-  .form{
-    margin-top: 28%;
-  }
-
 }
 
 </style>

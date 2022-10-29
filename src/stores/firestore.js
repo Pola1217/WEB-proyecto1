@@ -80,12 +80,12 @@ export const useFirestoreStore = defineStore("firestore", {
             }
         },
 
-        addUserRatingList(id, ratingValue) {
+        addUserRating(id, ratingValue) {
             const userRef = doc(db, 'users', id);
             setDoc(userRef, { rating: ratingValue }, {merge: true});
         },
 
-        addProductRatingList(id, ratingValue){
+        addProductRating(id, ratingValue){
             const prodRef = doc(db, 'products', id);
             setDoc(prodRef, { ratingList: ratingValue }, {merge: true});
         },

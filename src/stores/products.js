@@ -28,10 +28,10 @@ export const useProductsStore = defineStore("products", {
             const productInfo= {
                 "id": doc.id,
                 "image": doc.data().image,
-                "name": doc.data().productName,
-                "price": doc.data().productPrice,
-                "rating": doc.data().productRating,
-                "category": doc.data().productCategory,
+                "name": doc.data().name,
+                "price": doc.data().price,
+                "rating": doc.data().rating,
+                "category": doc.data().category,
             }
     
             this.products.push(productInfo);
