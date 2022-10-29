@@ -53,7 +53,7 @@
       ...mapStores( useProductsStore, useFirestoreStore, useAuthenticationStore),
 
       getUser(){
-                return this.authenticationStore.user
+                return this.authenticationStore.userId
         },
     
     },
@@ -77,31 +77,34 @@
         this.productsStore.addProductToCart(this.getUser, this.currentProduct);
     },
 
+    /*rateProducts(rating){
+
+        this.productsStore.changeRating(this.currentProduct, rating);
+    },*/
+
     async rateProduct() {
       if (this.authenticationStore.getUser() !== null) {
-
         //User info
         let uid = this.authenticationStore.getUser().uid;
         let user = await this.firestoreStore.getUser(uid);
 
-        //Check if user has rated 
+        //Check if user has rated the prodcut
         if (!user.rating || !user.rating.includes(this.currentProduct.id) && this.rating !== null) {
 
-          //Adds books rated by user to list, to avoid voting more than once
+          //Add rated products by user 
           this.firestoreStore.addUserRatingList(uid, this.userRatings(user));
 
-          //Add rating to book
           this.firestoreStore.addProductRatingList(this.currentProduct.id, this.productRating(this.currentProduct));
+          
+          this.firestoreStore.changeRating(this.currentProduct);
+
         } else {
-          alert("You've already voted!");
-
+          alert("Product already voted");
         }
-      } else {
 
-        alert("Please sign in before voting");
-      }
-      //Change book rating
-      this.changeRating(this.currentProduct);
+        } else {
+          alert("Please sign in before voting");
+        }
     },
 
     userRatings(user) {
@@ -119,23 +122,15 @@
 
     productRating(product) {
 
-      let RatingArray;
-
+      let productRatingArray;
       if (product.ratingList == null || product.ratingList == undefined) {
-        RatingArray = [this.rating];
+        productRatingArray = [this.rating];
       } else if (product.ratingList.length > 0) {
-        RatingArray = [...product.ratingList, this.rating];
+        productRatingArray = [...product.ratingList, this.rating];
       }
-      return RatingArray;
+      return productRatingArray;
     },
-
-    changeRating(product) {
-
-      const average = product.ratingList.reduce((a, b) => a + b, 0) / product.ratingList.length;
-      this.firestoreStore.updateRating(this.currentProduct.id, average);
-    }
-
-  },
+    },
 
   };
   </script>

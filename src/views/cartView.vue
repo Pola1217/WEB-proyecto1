@@ -11,6 +11,7 @@
       :key="products.id"
       :to="`/detail/${products.id}`"
     >
+      <img class="shop__pic" :src=products.image alt="preview">
       <div class="shop__info">
         <h4 class="shop__info__name">{{ products.name }}</h4>
         <p class="shop__info__price">{{ formatPrice(products.price)}}</p>
@@ -108,7 +109,8 @@ export default {
         },
 
         mounted(){
-            this.productsStore.getCart(this.getUser)
+
+            this.productsStore.getCart(this.getUser().uid)
         },
 
 
@@ -236,11 +238,11 @@ ul{
         font-family: $main-font;
         background: none;
         font-size: 0.90em;
-        color:#ff5f37;
+        color:#0d32a2;
         border: none;
 
         &:hover{
-           color: #e40000;
+           color: #050064;
         }
     }
 }
@@ -298,17 +300,98 @@ ul{
         font-family: $main-font;
         color: rgb(255, 255, 255);
         font-size: 0.85em;
-        background-color:#ff5f37;
+        background-color:#0d32a2;
         border: none;
         margin: 20px 0 0 125px;
    
 
         &:hover{
-            background-color: #e40000;
+            background-color: #050064;
         }
     }
 
     
+}
+
+@media all and (max-width:414px) {
+
+.CART{
+    margin-left: 30px !important;
+    
+    &__title{
+        margin-top: 30% !important;
+        margin-right: 20% !important;
+    }
+}
+
+.cart-checkout{
+    margin-top: 0% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    flex-direction: column !important;
+    align-content: stretch!important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+}
+
+.total{
+    width: 100% !important;
+
+}
+
+.product{
+    width: 100% !important;
+    padding-left: 5% !important;
+    padding-bottom: 1% !important;
+    display:flex !important;
+    align-items: center !important;
+
+    &__image {
+        width:100% !important;
+        height: 200px !important;
+        object-fit: contain !important;
+    }
+
+    &__name{
+        width: 100% !important;
+        margin-left: 5% !important;
+        font-family: 'SuisseBook' !important;
+        font-size: 1.2em !important;
+    
+    }
+
+    &__price{
+        width: 100% !important;
+        margin-top: 10% !important;
+        margin-left: 10% !important;
+        font-family: 'SuisseMono' !important;
+        font-size: 0.90em !important;
+    }
+
+    &__delete{ 
+        padding: 15% !important;
+        
+    }
+}
+
+.checkout{
+    width: 90% !important;
+    margin-left: 0% !important;
+    border: none !important;
+
+    &__title{
+        margin-top: 5%;
+    }
+
+    &__submit{
+        margin: 20px 20px 0 70px !important;
+        &:hover{
+            background-color: #050064 !important;
+        }
+    }
+
+    
+}    
 }
 
 </style>

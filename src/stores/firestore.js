@@ -90,9 +90,17 @@ export const useFirestoreStore = defineStore("firestore", {
             setDoc(prodRef, { ratingList: ratingValue }, {merge: true});
         },
 
-        updateRating(id, newRating) {
-            const prodRef = doc(db, 'products', id);
-            setDoc(prodRef, { rating: newRating }, {merge: true});
+        changeRating(product) {
+            let sum = 0;
+            let list = product.ratingList;
+            list.push(product.rating);
+
+            list.forEach(function(num) { sum += num });
+
+            let average = sum/list.length;
+            
+            const producRef = doc(db, 'products', product.id);
+            setDoc(producRef, { rating: average }, {merge: true});
         }
     }
 
