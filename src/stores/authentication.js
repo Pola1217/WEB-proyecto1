@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
-import { auth } from "../firebase/config";
-///// OPTIONS STORE
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, deleteUser } from "firebase/auth";
+import { auth, db } from "../firebase/config";
+import { deleteDoc, doc } from "firebase/firestore";
 
 export const useAuthenticationStore = defineStore("authentication", {
     state: () => ({
@@ -14,7 +14,8 @@ export const useAuthenticationStore = defineStore("authentication", {
     actions: {
 
        signIn(email, password) {
-            console.log('llamando sign in')
+
+            console.log('sign in')
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     // Signed in 
@@ -34,7 +35,8 @@ export const useAuthenticationStore = defineStore("authentication", {
             
                     const user = userCredential.user;
                     console.log('usuario creado', user)
-                    alert('usuario creado');
+
+                    alert('user created :)');
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
@@ -54,18 +56,32 @@ export const useAuthenticationStore = defineStore("authentication", {
       logOut(){
           signOut(auth).then(() => {
               console.log('user loged out')
+              alert('user loged out');
             }).catch((error) => {
               alert(error);
             });
       },
 
       getUser() {
+
+       /* onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+              const user = auth.currentUser;
+              this.userId = user.uid;
+            } else {
+              console.log("User is not signed in");
+            }
+          });*/
+
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                
                 this.userLogged = user;
                 
-                //bajovo@
-                if (user.uid == "C8hyxIy765MOBaDkR7Hi2x6n3wT2") {
+                //test
+                if (user.uid == "sThswpzVLBWPGZx7XAS59EKhWYp2") {
                     this.isAdmin = true;
                     alert("this is admin",this.isAdmin);
                 }
@@ -73,11 +89,39 @@ export const useAuthenticationStore = defineStore("authentication", {
                 console.log("No admin")
             }
         })
+
         return this.userLogged;
         },
     
         checkAdmin() {
+
             return this.isAdmin;
+
+            /*const docRef = doc(db, "users", this.userId);
+            const docSnap = await getDoc(docRef);
+
+            if(docSnap.exists()){
+                console.log("Document Data: ", docSnap.data());
+
+                this.isAdmin = docSnap.data().isUserAdmin;
+            }
+            else{
+                console.log("error no document auth");
+            }*/
+        },
+
+        async deleteAccount() {
+            const user = auth.currentUser;
+            await deleteDoc(doc(db, "users", user.uid));
+            console.log(user);
+
+            deleteUser(user).then(() => {
+                alert("User has been deleted");
+                location.reload();
+
+            }).catch((error) => {
+                console.log(error);
+            });
         }
 
   },

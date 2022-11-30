@@ -12,13 +12,14 @@ import { useAuthenticationStore } from "../stores/authentication";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyD71k15KzTC8YjWLEhQZaEvyeYbBIR7X-M",
-  authDomain: "caffeine-factor.firebaseapp.com",
-  projectId: "caffeine-factor",
-  storageBucket: "caffeine-factor.appspot.com",
-  messagingSenderId: "688926697056",
-  appId: "1:688926697056:web:29f75ec6c7058e1b690505",
-  measurementId: "G-DWXZLWFZLJ"
+  apiKey: "AIzaSyBXiIsEUQfH4R9N954IdaqVrRPOWQ2sSzA",
+  authDomain: "web-avanzada-87fdb.firebaseapp.com",
+  databaseURL: "https://web-avanzada-87fdb-default-rtdb.firebaseio.com",
+  projectId: "web-avanzada-87fdb",
+  storageBucket: "web-avanzada-87fdb.appspot.com",
+  messagingSenderId: "168385134236",
+  appId: "1:168385134236:web:a8a5e7265b674a9b84b759",
+  measurementId: "G-8WK6P5KZ3V"
 };
 
 const app = initializeApp(firebaseConfig);

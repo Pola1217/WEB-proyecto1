@@ -94,8 +94,8 @@ export default {
         
         this.firestoreStore.changeRating(this.currentProduct);
 
-      } else {
-        alert("Product already voted");
+      } else {2
+        alert('Product already voted');
       }
 
       } else {

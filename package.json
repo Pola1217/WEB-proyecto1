@@ -4,10 +4,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 4173"
+    "preview": "vite preview --port 4173",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "firebase": "^9.12.1",
+    "happy-dom": "^7.7.0",
     "hooper": "^0.3.4",
     "pinia": "^2.0.17",
     "underscore": "^1.13.6",
@@ -19,7 +22,11 @@
     "vue3-star-ratings": "^1.1.0"
   },
   "devDependencies": {
+    "@pinia/testing": "^0.0.14",
     "@vitejs/plugin-vue": "^3.0.1",
-    "vite": "^3.0.4"
+    "@vitest/coverage-c8": "^0.25.2",
+    "@vue/test-utils": "^2.2.4",
+    "vite": "^3.0.4",
+    "vitest": "^0.25.2"
   }
 }

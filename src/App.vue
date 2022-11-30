@@ -2,7 +2,6 @@
 import { RouterLink, RouterView } from 'vue-router'
 import {useAuthenticationStore} from './stores/authentication'
 import { mapStores } from "pinia";
-
 export default {
   components: {
     RouterLink, RouterView

@@ -11,15 +11,16 @@
         :key="products.id"
         :to="`/detail/${products.id}`"
       >
-        <img class="shop__pic" :src=products.image alt="preview">
-        <div class="shop__info">
-          <h4 class="shop__info__name">{{ products.name }}</h4>
-          <p class="shop__info__price">{{ formatPrice(products.price)}}</p>
+        
+        <div class="cart__info">
+          <img class="cart__info__pic" :src=products.image alt="preview">
+          <h4 class="cart__info__name">{{ products.name }}</h4>
+          <p class="cart__info__price">{{ formatPrice(product.price)}}</p>
+          <button class="cart__info__delete" @click="SignIn" >X</button>
         </div>
       
       </RouterLink>
       </ul>
-  
   
       <div id="total" class="total"></div>
       </div>
@@ -75,7 +76,7 @@
 
 
 import { useAuthenticationStore } from '../stores/authentication'
-import { useFirestoreStore } from "../stores/firestore.js";
+import { useFirestoreStore } from "../stores/firestore";
 import {useProductsStore} from "../stores/products.js"
 import { mapStores } from "pinia";
 import { auth } from "../firebase/config"
@@ -88,6 +89,13 @@ export default {
       };
     },
 
+    methods: {
+        formatPrice(value) {
+        let val = (value/1).toFixed(2).replace('.', ',')
+        return '$' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    },
+    },
+
     computed: {
             ...mapStores(useProductsStore, useAuthenticationStore),
 
@@ -95,8 +103,8 @@ export default {
                 return this.productsStore.getShoppingcart;
             },
             
-            getUser(){
-                return this.authenticationStore.user
+            User(){
+                return this.authenticationStore.getUser()
             },
             
             getCartData(){
@@ -105,13 +113,36 @@ export default {
         },
 
         data(){
-            return {current: {}}
+            return {current: {
+
+            }}
         },
+
+        watch: {
+
+            async userIsLogged() {
+            this.user = await this.firestoreStore.getUser(this.authenticationStore.getUser().uid);
+            }
+  
+        // whenever question changes, this function will run
+       /* User(newUser) {
+        if (newUser) {
+
+            this.productsStore.getCart(newUser)
+
+        }
+        }*/
+    },
 
         mounted(){
-            this.productsStore.getCart(this.getUser)
+
+            this.productsStore.getCart(this.User)
+
+            console.log("products", this.User);
+            
         },
 
+   
 
 }
 </script>
@@ -186,34 +217,27 @@ ul{
         margin-top: 5%;
         margin-bottom: 2%;
     }
-}
 
-.total{
-    border-top: 2px solid #000000;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    margin-top: 10%;
-    padding-left: 55%;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    font-family: 'SuisseMono';
-}
-
-.product{
+    .cart{
     width: 100%;
     padding-left: 5%;
     padding-bottom: 2%;
     display:flex;
+    flex-direction: column;
     align-items: center;
 
-    &__image {
-        width:100%;
-        height: 300px;
-        object-fit: contain;
-    }
+    &__info{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
 
-    &__name{
+        &__pic {
+        width:100%;
+        height: 100px;
+        object-fit: contain;
+        }
+
+        &__name{
         width: 100%;
         margin-left: 5%;
         font-family: $sub-font;
@@ -244,7 +268,28 @@ ul{
            color: #050064;
         }
     }
+
+    }
+
+    
+
+   
 }
+}
+
+.total{
+    border-top: 2px solid #000000;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 10%;
+    padding-left: 55%;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-family: 'SuisseMono';
+}
+
+
 
 .checkout{
     width: 80%;

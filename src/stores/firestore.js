@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { db , storage} from "../firebase/config"
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, deleteDoc } from "firebase/firestore";
 
 export const useFirestoreStore = defineStore("firestore", {
     state: () => ({
@@ -35,6 +35,7 @@ export const useFirestoreStore = defineStore("firestore", {
         },
 
         async getProducts() {
+
             const docRef = collection(db, "products");
             try {
                 const { docs } = await getDocs(docRef);
@@ -54,6 +55,25 @@ export const useFirestoreStore = defineStore("firestore", {
 
             console.log(products);
         },
+
+        async editProduct(id, product) {
+            try {
+                await setDoc(doc(db, "products", id), product);
+                alert("Edit successful");
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async deleteProduct(id) {
+            try {
+                await deleteDoc(doc(db, "products", id));
+                alert("Deleted product successfully");
+            } catch (error) {
+                console.log(error);
+            }
+        } ,
+    
 
         async getIndiProduct(id) {
             const docRef = doc(db, "products", id);

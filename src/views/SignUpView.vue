@@ -22,7 +22,7 @@
     <script>
     
     import { useAuthenticationStore } from '../stores/authentication'
-    import { useFirestoreStore } from "../stores/firestore.js";
+    import { useFirestoreStore } from "../stores/firestore";
     import { mapStores } from "pinia";
     import { auth } from "../firebase/config"
     
@@ -36,6 +36,7 @@
                 passwordConf: ''
             }
         },
+
         methods: {
     
         async SignUp(e) {

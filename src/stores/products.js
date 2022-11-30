@@ -28,43 +28,44 @@ export const useProductsStore = defineStore("products", {
             const productInfo= {
                 "id": doc.id,
                 "image": doc.data().image,
-                "name": doc.data().name,
-                "price": doc.data().price,
-                "rating": doc.data().rating,
-                "category": doc.data().category,
+                "name": doc.data().productName,
+                "rating": doc.data().productRating,
+                "price": doc.data().productPrice,
+                "category": doc.data().productCategory,
             }
     
             this.products.push(productInfo);
-
+            this.localStorageProducts.push(productInfo);
             });
     
           },
     
-        async displayItem(){
+        async renderProduct(){
 
-        this.list = [];
-        this.products = [];
-        this.defineDocs();
-    
-        console.log(this.products);
-        
-        let itemValue;
-        let object;
-    
-        let itemArr = [];
-    
-        for(let i = 0; i < localStorage.length; i++){
-            itemValue = localStorage.getItem(localStorage.key(i));
-            object = JSON.parse(itemValue);
-    
-            this.products.push(object);
-        }
-    
-        for(let j = 0; j < itemArr.length; j++){
-    
-            this.item = itemArr[j];
-            this.list.push(this.item);
-        }
+            this.list = [];
+            this.products = [];
+            this.defineDocs();
+      
+            console.log(this.products);
+          
+            let itemValue;
+            let object;
+      
+            let itemArr = [];
+      
+            for(let i = 0; i < localStorage.length; i++){
+                itemValue = localStorage.getItem(localStorage.key(i));
+                object = JSON.parse(itemValue);
+      
+                this.products.push(object);
+            }
+      
+            for(let i = 0; i < itemArr.length; j++){
+      
+                this.item = itemArr[j];
+                this.list.push(this.item);
+            }
+      
     
     },
 
@@ -86,192 +87,27 @@ export const useProductsStore = defineStore("products", {
           }
   },
 
+        async editProduct(objectData){
+            let newProduct = objectData;
+            this.id = objectData.id;
+
+            try{
+                await setDoc(doc(db, "items", this.id), newProduct);
+                alert("Product edited succesfully, ratings have been reset");
+            }
+
+            catch(error){
+                console.log(error);
+            }
+        },
+
         getProductsById(id) {
         const filteredProducts = this.products.filter((product) => id.toLowerCase() === product.name.toLowerCase());
         return filteredProducts ? {...filteredProducts[0] } : null
         },
 
-        newProduct(product) {
-            this.localStorageProducts.push(product);
-            this.products.push(product);
 
-            localStorage.setItem('products', JSON.stringify(this.localStorageProducts));
-        },
-
-        loadProducts() {
-            this.products = [
-                {
-                    'name': "Can-Shaped Cup Set",
-                    'category': "Accessories",
-                    'description': "The best way to drink your cold brew? In a mason jar, of course. And through a straw. So if you love cold brew, and love drinking it in style, this jar is what you need.",
-                    'price': '29',
-                    'rating': 4,
-                    'image': '/best1.png',
-                    
-                },
-                {
-                    'name': "White Milk Frother",
-                    'category': "Accessories",
-                    'description': "Take your beverage break to the next level with our NEW Chamberlain Coffee Electric Milk Frother. Get creative with some fancy latte art, or add some frothed milk onto your beverage and call it a day.",
-                    'price': '19',
-                    'rating': 4,
-                    'image': '/milk.png',
-                },
-                {
-                    'name': "Social Dog Blend - Coffee Bag",
-                    'category': "Coffee",
-                    'description': "Time for a treat! The kind of brew thats made for sharing. Full bodied, complex & smooth with notes of milk chocolate, roasted peanuts, brown sugar, & a graham cracker finish.",
-                    'price': '16',
-                    'rating': 5,
-                    'image': '/best2.png',
-                },
-                {
-                    'name': "Fluffy Lamb Vanilla Blend Coffee",
-                    'category': "Coffee",
-                    'description': "Your favorite coffee...but better. Our Vanilla-flavored coffee blend is the perfect cozy roast for an afternoon treat. Pure and delicious, this delightful medium roast brew highlights Madagascar vanilla and roasted nuts. ",
-                    'price': '18',
-                    'rating': 2,
-                    'image': '/best1.png',
-                },
-                {
-                    'name': "Early Bird Blend - Coffee Bag",
-                    'category': "Coffee",
-                    'description': "This ones for the early risers. For the get-up and goers. For the ones who get shit done.",
-                    'price': '20',
-                    'rating': 3,
-                    'image': '/bird.png',
-                },
-                {
-                    'name': "Variety Box Single Serve",
-                    'category': "Single",
-                    'description': "Try them all and find your fave. Get two single-serve Chamberlain Single.",
-                    'price': '20',
-                    'rating': 3,
-                    'image': '/best5.png',
-                },
-                {
-                    'name': "Wildcat Instant Sticks (10pc)",
-                    'category': "Single",
-                    'description': "These instant coffee sticks are perfect for on-the-go when you’re short on energy and time. Just add water for the best coffee for the road!",
-                    'price': '20',
-                    'rating': 4,
-                    'image': '/wildcat.png',
-                },
-                {
-                    'name': "Social Dog Single Serve",
-                    'category': "Single",
-                    'description': "Time for a treat! The kind of brew that’s made for sharing.",
-                    'price': '16',
-                    'rating': 3,
-                    'image': '/dogSingle.png',
-                },
-                {
-                    'name': "Careless Cat Single Serve",
-                    'category': "Single",
-                    'description': "Time for a treat! The kind of brew that’s made for sharing.",
-                    'price': '16',
-                    'rating': 5,
-                    'image': '/catSingle.png',
-                },
-                {
-                    'name': "Early Bird Single Serve",
-                    'category': "Single",
-                    'description': "This one’s for the early risers. For the get-up and goers. For the ones who get shit done.",
-                    'price': '16',
-                    'rating': 5,
-                    'image': '/birdSingle.png',
-                },
-                {
-                    'name': "Matcha Green Tea Powder",
-                    'category': "Tea",
-                    'description': "Our Organic Matcha Green Tea Powder is vegan, gluten-free, full of antioxidants, and just simply delicious.",
-                    'price': '20',
-                    'rating': 5,
-                    'image': '/match.png',
-                    
-                },
-                {
-                    'name': "Vanilla Flavored Matcha Tea Powder",
-                    'category': "Tea",
-                    'description': "You heard it here first: vanilla is the secret to less stress. Mixed with our best selling Matcha, you’ve got a perfect beverage. ",
-                    'price': '20',
-                    'rating': 4,
-                    'image': '/vanilla.png',
-                },
-                {
-                    'name': "Mango Flavored Matcha Tea Powder",
-                    'category': "Tea",
-                    'description': "Like a trip to the tropics, Mango Matcha is all natural, rich in benefits, and just plain delicious. ",
-                    'price': '20',
-                    'rating': 5,
-                    'image': '/mango.png',
-                },
-                {
-                    'name': "Matcha Variety Pack",
-                    'category': "Kit",
-                    'description': "Try them ALL! Your matcha routine just leveled up with all three of our best selling Matcha green tea powders",
-                    'price': '40',
-                    'rating': 2,
-                    'image': '/best4.png',
-                },
-                {
-                    'name': "Super Matcha Bundle",
-                    'category': "Kit",
-                    'description': "We have your matcha routine sorted.",
-                    'price': '40',
-                    'rating': 5,
-                    'image': '/kitMatch.png',
-                },
-                {
-                    'name': "Fancy Mouse Espresso Blend - Coffee Bag",
-                    'category': "Coffee",
-                    'description': "Chamberlain Coffees espresso blend. Available in both classic ground and whole bean.",
-                    'price': '15',
-                    'rating': 4,
-                    'image': '/mouse.png',
-                },
-                {
-                    'name': "Witty Fox Hazelnut Blend Coffee",
-                    'category': "Coffee",
-                    'description': "Life’s short. Why not sip great (flavored) coffee? Witty Fox is always down for mischief.",
-                    'price': '20',
-                    'rating': 2,
-                    'image': '/fox.png',
-                },
-                {
-                    'name': "Sleepy Sloth Decaf Blend - Coffee Bag",
-                    'category': "Coffee",
-                    'description': "Love coffee but also love sleeping? The Sleepy Sloth decaf blend is perfect for those that want coffee but don’t need that extra energy.",
-                    'price': '16',
-                    'rating': 3,
-                    'image': '/decaff.png',
-                },
-                {
-                    'name': "Cold Brew Elephant - XL Cold Brew Bags",
-                    'category': "Single",
-                    'description': "This is for the BIG TIME cold brew lovers. Start your morning the right way in just three steps",
-                    'price': '35',
-                    'rating': 1,
-                    'image': '/xl.png',
-                },
-                {
-                    'name': "Double Walled Mug",
-                    'category': "Accesories",
-                    'description': "Introducing the Double Walled Mug, an oh-so-cute piece of glassware to elevate your drink-of-choice, hot or cold.",
-                    'price': '25',
-                    'rating': 5,
-                    'image': '/cup.png',
-                },  
-    
-              ];
-           
-            this.localStorageProducts = JSON.parse(localStorage.getItem('products'));
-            this.products = this.products.concat([...this.localStorageProducts]);
-
-        },
-
-
-        sortProducts(order) {
+        async sortProducts(order) {
 
             switch (order) {
                 case "0":
@@ -294,7 +130,7 @@ export const useProductsStore = defineStore("products", {
             },
         
 
-        filter (index, filterNumb) {
+        async filter (index, filterNumb) {
 
             if (filterNumb == 'type') {
                
@@ -303,27 +139,27 @@ export const useProductsStore = defineStore("products", {
                 switch (index) {
   
                     case "0":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.category == "Coffee");
                         
                         break;
                     case "1":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.category == "Tea");
                         
                         break;
                     case "2":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.category == "Accessories");
                         
                         break;
                     case "3":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.category == "Kit");
                         
                         break;
                     case "4":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.category == "Single");
                         
                         break;
@@ -335,19 +171,19 @@ export const useProductsStore = defineStore("products", {
 
                 switch (index) {
                     case "0":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.price < 20);
                         break;
                     case "1":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) =>  product.price < 30);
                         break;
                     case "2":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) =>  product.price < 50);
                         break;
                     case "3":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) =>  product.price > 50);
                         break;
                 }
@@ -360,27 +196,27 @@ export const useProductsStore = defineStore("products", {
                 switch (index) {
   
                     case "0":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.rating == "1");
                         
                         break;
                     case "1":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.rating == "2");
                         
                         break;
                     case "2":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.rating == "3");
                         
                         break;
                     case "3":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.rating == "4");
                         
                         break;
                     case "4":
-                        this.loadProducts();
+                        this.renderProduct();
                         this.products = this.products.filter((product) => product.rating == "5");
                         
                         break;
@@ -391,11 +227,11 @@ export const useProductsStore = defineStore("products", {
             
         },
 
-    async addProductToCart(userId, productInfo){
+    async addProductToCart(user, productInfo){
 
         try{
-            if(userId != null){
-                await setDoc(doc(db, "users", userId.uid, "order", productInfo.id), productInfo);
+            if(user != null){
+                await setDoc(doc(db, "users", user.uid, "order", productInfo.id), productInfo);
                 alert("Product added to cart");
             }
             else{
@@ -408,18 +244,23 @@ export const useProductsStore = defineStore("products", {
           }
       },
 
-      async assingValuesToCart(data){
+      async cartValues(data){
         this.cartData = data;
         this.shoppingCart.push(this.cartData);
       },
 
-      async getCart(userId){
+      async getCart(user){
 
-        const querySnapshot = await getDocs(collection(db, "users", userId, "order"));
+        console.log (user),
+
+        this.shoppingCart = [];
+
+        const querySnapshot = await getDocs(collection(db, "users", user, "order" ));
 
         querySnapshot.forEach((doc) => {
-        
-        this.assingValuesToCart(doc.data())
+
+            //console.log(doc.id, " => ", doc.data());
+            this.cartValues(doc.data())
     
         });
       },
@@ -428,3 +269,4 @@ export const useProductsStore = defineStore("products", {
     }
 
 });
+
