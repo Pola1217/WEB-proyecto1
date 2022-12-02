@@ -9,7 +9,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "firebase": "^9.12.1",
+    "firebase": "^9.14.0",
     "happy-dom": "^7.7.0",
     "hooper": "^0.3.4",
     "pinia": "^2.0.17",

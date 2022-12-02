@@ -49,13 +49,13 @@
           },
         });
         await wrapper.find("button#shop__info__edit").trigger("click");
-        const nameInput = wrapper.find("input.form__input")
+        const input = wrapper.find("input.form__input")
           
-        await nameInput.setValue('item test')
+        await input.setValue('item test')
     
         await wrapper.find("input.shop__info__edit").trigger("click");
     
-        expect(nameInput.element.value).toBe('item test')
+        expect(input.element.value).toBe('item test')
     
       });
 

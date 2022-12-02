@@ -46,7 +46,15 @@ const router = createRouter({
     name: 'cart',
     component: () => import('../views/cartView.vue')
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'error404',
+      
+      component: () => import('../views/error404.vue')
+  },
+
   ]
 })
 
 export default router
+
